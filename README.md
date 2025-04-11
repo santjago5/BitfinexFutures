@@ -1,0 +1,2 @@
+# BitfinexFutures
+Bitfinex Futures connector 

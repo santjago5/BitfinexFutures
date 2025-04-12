@@ -20,13 +20,13 @@ using System.Threading;
 using Newtonsoft.Json;
 
 
-namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
+namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 {
-    public class BitfinexSpotServer : AServer
+    public class BitfinexFuturesServer : AServer
     {
-        public BitfinexSpotServer()
+        public BitfinexFuturesServer()
         {
-            BitfinexSpotServerRealization realization = new BitfinexSpotServerRealization();
+            BitfinexFuturesServerRealization realization = new BitfinexFuturesServerRealization();
             ServerRealization = realization;
 
             CreateParameterString(OsLocalization.Market.ServerParamPublicKey, "");
@@ -34,11 +34,11 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
         }
     }
 
-    public class BitfinexSpotServerRealization : IServerRealization
+    public class BitfinexFuturesServerRealization : IServerRealization
     {
         #region 1 Constructor, Status, Connection
 
-        public BitfinexSpotServerRealization()
+        public BitfinexFuturesServerRealization()
         {
             ServerStatus = ServerConnectStatus.Disconnect;
 
@@ -153,7 +153,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 
         public ServerType ServerType
         {
-            get { return ServerType.BitfinexSpot; }
+            get { return ServerType.BitfinexFutures; }
         }
 
         public event Action ConnectEvent;
@@ -194,7 +194,8 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 
                 RequestMinSizes();
 
-                string _apiPath = "v2/tickers?symbols=ALL";
+                // string _apiPath = "v2/tickers?symbols=ALL";
+                string _apiPath = "v2/conf/pub:list:pair:futures";
 
                 IRestResponse response = CreatePublicQuery(_apiPath, Method.GET);
 
@@ -226,25 +227,20 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                         string price = item[7]?.ToString()?.Replace('.', ',');
                         string volume = item[8]?.ToString()?.Replace('.', ',');
 
-                        if (symbol.Contains("F0")
-                            || symbol.Contains("TEST")
-                            || symbol.Contains("ALT")
-                            || symbol.Contains("HILSV")
-                            || symbol.Contains("TITAN")
-                            || symbol.Contains("USTBL")
-                            || !symbol.StartsWith("t"))
+                        if (  symbol.Contains("TEST")
+                            || !symbol.StartsWith("f"))
                         {
                             continue;
                         }
 
                         Security newSecurity = new Security();
 
-                        newSecurity.Exchange = ServerType.BitfinexSpot.ToString();
+                        newSecurity.Exchange = ServerType.BitfinexFutures.ToString();
                         newSecurity.Name = symbol;
                         newSecurity.NameFull = symbol;
                         newSecurity.NameClass = GetNameClass(symbol);
                         newSecurity.NameId = symbol;
-                        newSecurity.SecurityType = SecurityType.CurrencyPair;
+                        newSecurity.SecurityType = SecurityType.Futures;
                         newSecurity.Lot = 1;
                         newSecurity.State = SecurityStateType.Activ;
                         newSecurity.Decimals = price.DecimalsCount() == 0 ? 1 : price.DecimalsCount();
@@ -411,7 +407,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                 {
                     Portfolio portfolio = new Portfolio();
 
-                    portfolio.Number = "BitfinexSpotPortfolio";
+                    portfolio.Number = "BitfinexFuturesPortfolio";
                     portfolio.ValueBegin = 1;
                     portfolio.ValueCurrent = 1;
 
@@ -425,7 +421,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                         {
                             PositionOnBoard position = new PositionOnBoard();
 
-                            position.PortfolioName = "BitfinexSpotPortfolio";
+                            position.PortfolioName = "BitfinexFuturesPortfolio";
                             position.SecurityNameCode = wallet[1].ToString();
                             position.ValueBegin = wallet[2].ToString().ToDecimal();
                             position.ValueCurrent = wallet[4].ToString().ToDecimal();
@@ -2333,7 +2329,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                 }
 
                 updateOrder.Price = (orderDataList[16]).ToString().ToDecimal();
-                updateOrder.ServerType = ServerType.BitfinexSpot;
+                updateOrder.ServerType = ServerType.BitfinexFutures;
                 decimal volume = (orderDataList[7]).ToString().ToDecimal();
 
                 if (volume < 0)
@@ -2343,7 +2339,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 
                 updateOrder.VolumeExecute = volume;
                 updateOrder.Volume = volume;
-                updateOrder.PortfolioNumber = "BitfinexSpotPortfolio";
+                updateOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
 
                 MyOrderEvent?.Invoke(updateOrder);
             }
@@ -2372,16 +2368,16 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 
                 Portfolio portfolio = new Portfolio();
 
-                portfolio.Number = "BitfinexSpotPortfolio";
+                portfolio.Number = "BitfinexFuturesPortfolio";
                 portfolio.ValueBegin = 1;
                 portfolio.ValueCurrent = 1;
-                portfolio.ServerType = ServerType.BitfinexSpot;
+                portfolio.ServerType = ServerType.BitfinexFutures;
 
                 if (wallet[0].ToString() == "exchange")
                 {
                     PositionOnBoard position = new PositionOnBoard();
 
-                    position.PortfolioName = "BitfinexSpotPortfolio";
+                    position.PortfolioName = "BitfinexFuturesPortfolio";
                     position.SecurityNameCode = wallet[1].ToString();
                     position.ValueCurrent = wallet[2].ToString().ToDecimal();
                     position.ValueBegin = wallet[2].ToString().ToDecimal();
@@ -2428,7 +2424,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 
                 newOrder.Cid = order.NumberUser.ToString();
                 newOrder.Symbol = order.SecurityNameCode;
-                order.PortfolioNumber = "BitfinexSpotPortfolio";
+                order.PortfolioNumber = "BitfinexFuturesPortfolio";
 
                 if (order.TypeOrder == OrderPriceType.Limit)
                 {
@@ -2676,7 +2672,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 
                         activeOrder.TimeCallBack = TimeManager.GetDateTimeFromTimeStamp(Convert.ToInt64(orderData[5]));
                         activeOrder.TimeCreate = TimeManager.GetDateTimeFromTimeStamp(Convert.ToInt64(orderData[4]));
-                        activeOrder.ServerType = ServerType.BitfinexSpot;
+                        activeOrder.ServerType = ServerType.BitfinexFutures;
                         activeOrder.SecurityNameCode = orderData[3].ToString();
 
                         try
@@ -2699,7 +2695,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                         }
                         activeOrder.Volume = volume;
                         activeOrder.Price = orderData[16].ToString().ToDecimal();
-                        activeOrder.PortfolioNumber = "BitfinexSpotPortfolio";
+                        activeOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
 
                         orders.Add(activeOrder);
                     }
@@ -2906,7 +2902,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                                 historyOrder.NumberMarket = orderData[0]?.ToString();
                                 historyOrder.TimeCreate = TimeManager.GetDateTimeFromTimeStamp(Convert.ToInt64(orderData[5]));
                                 historyOrder.TimeCallBack = TimeManager.GetDateTimeFromTimeStamp(Convert.ToInt64(orderData[4]));
-                                historyOrder.ServerType = ServerType.BitfinexSpot;
+                                historyOrder.ServerType = ServerType.BitfinexFutures;
                                 historyOrder.SecurityNameCode = orderData[3]?.ToString();
                                 historyOrder.Side = orderData[7]?.ToString().ToDecimal() > 0 ? Side.Buy : Side.Sell;
                                 historyOrder.State = GetOrderState(orderData[13]?.ToString());
@@ -2929,7 +2925,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                                 }
 
                                 historyOrder.Price = orderData[16].ToString().ToDecimal();
-                                historyOrder.PortfolioNumber = "BitfinexSpotPortfolio";
+                                historyOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
                                 historyOrder.VolumeExecute = volume;
                                 historyOrder.Volume = volume;
 

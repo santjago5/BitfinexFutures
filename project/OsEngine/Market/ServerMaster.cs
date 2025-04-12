@@ -73,6 +73,8 @@ using OsEngine.Market.Servers.CoinEx.Spot;
 using OsEngine.Market.Servers.CoinEx.Futures;
 using OsEngine.Market.Servers.RSSNews;
 using OsEngine.Market.Servers.SmartLabNews;
+using OsEngine.Market.Servers.Bitfinex.BitfinexSpot;
+using OsEngine.Market.Servers.Bitfinex.BitfinexFutures;
 
 
 namespace OsEngine.Market
@@ -1189,6 +1191,10 @@ namespace OsEngine.Market
                 {
                     serverPermission = new BitfinexSpotServerPermission();
                 }
+                else if (type == ServerType.BitfinexFutures)
+                {
+                    serverPermission = new BitfinexFuturesServerPermission();
+                }
                 else if (type == ServerType.Kraken)
                 {
                     serverPermission = new KrakenServerPermission();
@@ -1535,6 +1541,13 @@ namespace OsEngine.Market
         /// биржа криптовалют BitfinexSpot
         /// </summary>
         BitfinexSpot,
+
+        /// <summary>
+        /// cryptocurrency exchange BitfinexFutures
+        /// биржа криптовалют BitfinexFutures
+
+        /// </summary>
+        BitfinexFutures,
 
         /// <summary>
         /// cryptocurrency exchange Binance

@@ -403,16 +403,16 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     {
                         List<string> wallet = wallets[i];
 
-                        if (wallet[0].ToString() == "margin")
+                        if (wallet[0]?.ToString() == "margin")
                         {
                             PositionOnBoard position = new PositionOnBoard();
 
                             position.PortfolioName = "BitfinexFuturesPortfolio";
                             position.SecurityNameCode = wallet[1].ToString();
                             position.ValueBegin = wallet[2].ToString().ToDecimal();
-                            position.ValueCurrent = wallet[4].ToString().ToDecimal();
+                            position.ValueCurrent = wallet[2].ToString().ToDecimal();
 
-                            if (wallet[4] != null)
+                            if (wallet[2] != null)
                             {
                                 position.ValueBlocked = wallet[2].ToString().ToDecimal() - wallet[4].ToString().ToDecimal();
                             }
@@ -2359,7 +2359,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 portfolio.ValueCurrent = 1;
                 portfolio.ServerType = ServerType.BitfinexFutures;
 
-                if (wallet[0].ToString() == "exchange")
+                if (wallet[0].ToString() == "margin")
                 {
                     PositionOnBoard position = new PositionOnBoard();
 

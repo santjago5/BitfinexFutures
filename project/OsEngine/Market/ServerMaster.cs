@@ -15,7 +15,6 @@ using OsEngine.Market.Servers;
 using OsEngine.Market.Servers.AstsBridge;
 using OsEngine.Market.Servers.Binance.Futures;
 using OsEngine.Market.Servers.Binance.Spot;
-using OsEngine.Market.Servers.Bitfinex;
 using OsEngine.Market.Servers.BitMax;
 using OsEngine.Market.Servers.BitMex;
 using OsEngine.Market.Servers.BitStamp;
@@ -204,6 +203,7 @@ namespace OsEngine.Market
                 serverTypes.Add(ServerType.BitMex);
                 serverTypes.Add(ServerType.BitStamp);
                 serverTypes.Add(ServerType.BitfinexSpot);
+                serverTypes.Add(ServerType.BitfinexFutures);
                 serverTypes.Add(ServerType.Kraken);
                 serverTypes.Add(ServerType.KuCoinSpot);
                 serverTypes.Add(ServerType.KuCoinFutures);
@@ -324,6 +324,7 @@ namespace OsEngine.Market
                 serverTypes.Add(ServerType.BitMex);
                 serverTypes.Add(ServerType.BitStamp);
                 serverTypes.Add(ServerType.BitfinexSpot);
+                serverTypes.Add(ServerType.BitfinexFutures);
                 serverTypes.Add(ServerType.Kraken);
                 serverTypes.Add(ServerType.Exmo);
                 serverTypes.Add(ServerType.HTXFutures);
@@ -550,6 +551,10 @@ namespace OsEngine.Market
                 if (type == ServerType.BitfinexSpot)
                 {
                     newServer = new BitfinexSpotServer();
+                }
+                if (type == ServerType.BitfinexFutures)
+                {
+                    newServer = new BitfinexFuturesServer();
                 }
                 if (type == ServerType.Binance)
                 {

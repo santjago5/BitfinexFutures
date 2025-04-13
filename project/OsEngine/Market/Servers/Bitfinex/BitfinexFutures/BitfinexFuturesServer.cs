@@ -18,6 +18,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
+using System.Windows.Forms;
+using System.Windows.Input;
 
 
 namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
@@ -193,9 +195,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 _rateGateSecurity.WaitToProceed();
 
                 RequestMinSizes();
-
-                // string _apiPath = "v2/tickers?symbols=ALL";
-                string _apiPath = "v2/conf/pub:list:pair:futures";
+                 
+                string _apiPath ="v2/status/deriv?keys=ALL";
+            
 
                 IRestResponse response = CreatePublicQuery(_apiPath, Method.GET);
 
@@ -219,43 +221,50 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     List<Security> securities = new List<Security>();
 
+
                     for (int i = 0; i < securityList.Count; i++)
                     {
                         List<string> item = securityList[i];
 
                         string symbol = item[0]?.ToString();
-                        string price = item[7]?.ToString()?.Replace('.', ',');
-                        string volume = item[8]?.ToString()?.Replace('.', ',');
+                        string DerevativePrice = item[3]?.ToString()?.Replace('.', ',');
+                        string spotPrice = item[4]?.ToString()?.Replace('.', ',');
+                        string MarkPrice = item[15]?.ToString()?.Replace('.', ',');
+                       // string volume = item[11]?.ToString()?.Replace('.', ',');
 
-                        if (  symbol.Contains("TEST")
-                            || !symbol.StartsWith("f"))
+                        if (symbol.Contains("TEST"))
+
                         {
                             continue;
                         }
 
-                        Security newSecurity = new Security();
-
-                        newSecurity.Exchange = ServerType.BitfinexFutures.ToString();
-                        newSecurity.Name = symbol;
-                        newSecurity.NameFull = symbol;
-                        newSecurity.NameClass = GetNameClass(symbol);
-                        newSecurity.NameId = symbol;
-                        newSecurity.SecurityType = SecurityType.Futures;
-                        newSecurity.Lot = 1;
-                        newSecurity.State = SecurityStateType.Activ;
-                        newSecurity.Decimals = price.DecimalsCount() == 0 ? 1 : price.DecimalsCount();
-                        newSecurity.PriceStep = newSecurity.Decimals.GetValueByDecimals();
-
-                        if (newSecurity.PriceStep == 0)
+                        if (symbol.Contains("USTF0"))
                         {
-                            newSecurity.PriceStep = 1;
+
+                            Security newSecurity = new Security();
+
+                            newSecurity.Exchange = ServerType.BitfinexFutures.ToString();
+                            newSecurity.Name = symbol;
+                            newSecurity.NameFull = symbol;
+                            newSecurity.NameClass = GetNameClass(symbol);
+                            newSecurity.NameId = symbol;
+                            newSecurity.SecurityType = SecurityType.Futures;
+                            newSecurity.Lot = 1;
+                            newSecurity.State = SecurityStateType.Activ;
+                            newSecurity.Decimals = DerevativePrice.DecimalsCount() == 0 ? 1 : DerevativePrice.DecimalsCount();
+                            newSecurity.PriceStep = newSecurity.Decimals.GetValueByDecimals();
+
+                            if (newSecurity.PriceStep == 0)
+                            {
+                                newSecurity.PriceStep = 1;
+                            }
+
+                            newSecurity.PriceStepCost = newSecurity.PriceStep;
+                            newSecurity.DecimalsVolume = DigitsAfterComma(DerevativePrice); //DigitsAfterComma(volume);
+                            newSecurity.MinTradeAmount = GetMinSize(symbol);
+
+                            securities.Add(newSecurity);
                         }
-
-                        newSecurity.PriceStepCost = newSecurity.PriceStep;
-                        newSecurity.DecimalsVolume = DigitsAfterComma(volume);
-                        newSecurity.MinTradeAmount = GetMinSize(symbol);
-
-                        securities.Add(newSecurity);
                     }
 
                     if (SecurityEvent != null)
@@ -288,7 +297,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
             try
             {
-                string _apiPath = "/v2/conf/pub:info:pair";
+                string _apiPath = "/v2/conf/pub:info:pair:futures";
 
                 IRestResponse response = CreatePublicQuery(_apiPath, Method.GET);
 
@@ -303,7 +312,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                         for (int j = 0; j < subArray.Count; j++)
                         {
                             object[] pairData = JsonConvert.DeserializeObject<object[]>(subArray[j]?.ToString());
-                            string pair = "t" + (pairData[0]?.ToString() ?? "");
+                            string pair = "t"+ (pairData[0]?.ToString() ?? "");
                             object[] pairData2 = JsonConvert.DeserializeObject<object[]>(pairData[1]?.ToString());
 
                             string minSizeString = pairData2[3].ToString();
@@ -332,35 +341,12 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         {
             switch (security)
             {
-                case string s when s.EndsWith("USD"):
-                    return "USD";
-                case string s when s.EndsWith("UST"):
+                case string s when s.EndsWith("USTF0"):
                     return "USDT";
-                case string s when s.EndsWith("BTC"):
-                    return "BTC";
-                case string s when s.EndsWith("EUR"):
-                    return "EUR";
-                case string s when s.EndsWith("JPY"):
-                    return "JPY";
-                case string s when s.EndsWith("GBP"):
-                    return "GBP";
-                case string s when s.EndsWith("ETH"):
-                    return "ETH";
-                case string s when s.EndsWith("CNHT"):
-                    return "CNHT";
-                case string s when s.EndsWith("XAUT"):
-                    return "XAUT";
-                case string s when s.EndsWith("MXNT"):
-                    return "MXNT";
-                case string s when s.EndsWith("TRY"):
-                    return "TRY";
-                case string s when s.EndsWith("USDR"):
-                    return "USDR";
-                case string s when s.EndsWith("USDQ"):
-                    return "USDQ";
+              
             }
 
-            return "CurrencyPair";
+            return "Futures";
         }
 
         public decimal GetMinSize(string symbol)
@@ -417,7 +403,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     {
                         List<string> wallet = wallets[i];
 
-                        if (wallet[0].ToString() == "exchange")
+                        if (wallet[0].ToString() == "margin")
                         {
                             PositionOnBoard position = new PositionOnBoard();
 
@@ -3069,6 +3055,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         #region 13 Log
 
         public event Action<string, LogMessageType> LogMessageEvent;
+        
 
         private void SendLogMessage(string message, LogMessageType messageType)
         {

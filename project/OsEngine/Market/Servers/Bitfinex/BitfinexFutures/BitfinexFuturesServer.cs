@@ -18,8 +18,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
-using System.Windows.Forms;
-using System.Windows.Input;
+using static OsEngine.Market.Servers.TraderNet.Entity.RequestSecurity;
+using System.Windows.Documents;
+using static System.Net.WebRequestMethods;
+
 
 
 namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
@@ -412,7 +414,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                             position.ValueBegin = wallet[2].ToString().ToDecimal();
                             position.ValueCurrent = wallet[2].ToString().ToDecimal();
 
-                            if (wallet[2] != null)
+                            if (wallet[4] != null)
                             {
                                 position.ValueBlocked = wallet[2].ToString().ToDecimal() - wallet[4].ToString().ToDecimal();
                             }
@@ -455,7 +457,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             endTime = DateTime.SpecifyKind(endTime, DateTimeKind.Utc);
             actualTime = DateTime.SpecifyKind(actualTime, DateTimeKind.Utc);
 
-            int limit = 10000;
+            int limit = 4990;
 
             List<Trade> trades = new List<Trade>();
 
@@ -633,7 +635,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
         public List<Candle> GetCandleHistory(string nameSec, TimeSpan tf, bool isOsData, int countToLoad, DateTime timeEnd)
         {
-            int limit = 9990;
+            int limit = 4990;
 
             List<Candle> allCandles = new List<Candle>();
 
@@ -808,13 +810,13 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                         return null;
                     }
 
-                    List<BitfinexCandle> candleList = new List<BitfinexCandle>();
+                    List<BitfinexFuturesCandle> candleList = new List<BitfinexFuturesCandle>();
 
                     for (int i = 0; i < candles.Count; i++)
                     {
                         List<string> candleData = candles[i];
 
-                        BitfinexCandle newCandle = new BitfinexCandle();
+                        BitfinexFuturesCandle newCandle = new BitfinexFuturesCandle();
 
                         newCandle.Mts = candleData[0].ToString();
                         newCandle.Open = candleData[1].ToString();
@@ -841,7 +843,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             return null;
         }
 
-        private List<Candle> ConvertToCandles(List<BitfinexCandle> candleList)
+        private List<Candle> ConvertToCandles(List<BitfinexFuturesCandle> candleList)
         {
             List<Candle> candles = new List<Candle>();
 
@@ -849,7 +851,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             {
                 for (int i = 0; i < candleList.Count; i++)
                 {
-                    BitfinexCandle candle = candleList[i];
+                    BitfinexFuturesCandle candle = candleList[i];
 
                     try
                     {
@@ -1604,6 +1606,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 {
                     webSocketPublicMarketDepths.Send($"{{\"event\":\"subscribe\",\"channel\":\"book\",\"symbol\":\"{security.Name}\",\"prec\":\"P0\",\"freq\":\"F0\",\"len\":\"25\"}}");
                     webSocketPublicTrades.Send($"{{\"event\":\"subscribe\",\"channel\":\"trades\",\"symbol\":\"{security.Name}\"}}");
+                    //webSocketPublicStatus.Send($"{{\"event\":\"subscribe\",\"channel\":\"status\",\"key\":\"{security.Name}\"}}");
                 }
             }
             catch (Exception exception)
@@ -1724,7 +1727,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     if (message.Contains("book"))
                     {
-                        BitfinexSubscriptionResponse responseDepth = JsonConvert.DeserializeObject<BitfinexSubscriptionResponse>(message);
+                        BitfinexFuturesSubscriptionResponse responseDepth = JsonConvert.DeserializeObject<BitfinexFuturesSubscriptionResponse>(message);
 
                         int key = Convert.ToInt32(responseDepth.ChanId);
 
@@ -1855,7 +1858,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     if (message.Contains("\"event\":\"auth\""))
                     {
-                        BitfinexAuthResponseWebSocket authResponse = JsonConvert.DeserializeObject<BitfinexAuthResponseWebSocket>(message);
+                        BitfinexFuturesAuthResponseWebSocket authResponse = JsonConvert.DeserializeObject<BitfinexFuturesAuthResponseWebSocket>(message);
 
                         if (authResponse.Status == "OK")
                         {
@@ -2406,7 +2409,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 string _apiPath = "v2/auth/w/order/submit";
 
-                BitfinexOrderData newOrder = new BitfinexOrderData();
+                BitfinexFuturesOrderData newOrder = new BitfinexFuturesOrderData();
 
                 newOrder.Cid = order.NumberUser.ToString();
                 newOrder.Symbol = order.SecurityNameCode;

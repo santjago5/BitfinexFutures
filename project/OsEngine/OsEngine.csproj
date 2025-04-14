@@ -475,6 +475,9 @@
     </Compile>
     <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\BitfinexFuturesServerPermission.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\BitfinexFuturesServer.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesCandle.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesOrder.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesWebsocketTrades.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\BitfinexSpotServer.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\BitfinexSpotServerPermission.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\Json\BitfinexCandle.cs" />
@@ -2115,9 +2118,7 @@
     <Resource Include="Images\MainWIndow\alor1.png" />
     <Resource Include="Images\MainWIndow\alor2.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Market\Servers\Bitfinex\BitfinexFutures\Json\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.46.6\build\net45\Grpc.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

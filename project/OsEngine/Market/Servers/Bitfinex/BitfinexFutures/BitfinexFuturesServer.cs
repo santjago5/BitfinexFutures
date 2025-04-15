@@ -248,7 +248,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                             newSecurity.Exchange = ServerType.BitfinexFutures.ToString();
                             newSecurity.Name = symbol;
                             newSecurity.NameFull = symbol;
-                            newSecurity.NameClass = GetNameClass(symbol);
+                            newSecurity.NameClass = "Futures"; //GetNameClass(symbol);
                             newSecurity.NameId = symbol;
                             newSecurity.SecurityType = SecurityType.Futures;
                             newSecurity.Lot = 1;
@@ -339,17 +339,17 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             }
         }
 
-        private string GetNameClass(string security)
-        {
-            switch (security)
-            {
-                case string s when s.EndsWith("USTF0"):
-                    return "USDT";
+        //private string GetNameClass(string security)
+        //{
+        //    switch (security)
+        //    {
+        //        case string s when s.EndsWith("USTF0"):
+        //            return "Futures";
               
-            }
+        //    }
 
-            return "Futures";
-        }
+        //    return "Futures";
+        //}
 
         public decimal GetMinSize(string symbol)
         {
@@ -2307,7 +2307,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 string typeOrder = (orderDataList[8]).ToString();
 
-                if (typeOrder == "EXCHANGE LIMIT")
+                if (typeOrder == "LIMIT")
                 {
                     updateOrder.TypeOrder = OrderPriceType.Limit;
                 }
@@ -2417,11 +2417,11 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 if (order.TypeOrder == OrderPriceType.Limit)
                 {
-                    newOrder.OrderType = "EXCHANGE LIMIT";
+                    newOrder.OrderType = "LIMIT";
                 }
                 else
                 {
-                    newOrder.OrderType = "EXCHANGE MARKET";
+                    newOrder.OrderType = "MARKET";
                 }
 
                 newOrder.Price = order.TypeOrder == OrderPriceType.Market ? null : order.Price.ToString().Replace(",", ".");
@@ -2897,7 +2897,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                                 historyOrder.State = GetOrderState(orderData[13]?.ToString());
                                 string typeOrder = orderData[8].ToString();
 
-                                if (typeOrder == "EXCHANGE LIMIT")
+                                if (typeOrder == "LIMIT")
                                 {
                                     historyOrder.TypeOrder = OrderPriceType.Limit;
                                 }
@@ -3015,7 +3015,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         {
             try
             {
-                string nonce = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()).ToString();
+                string nonce = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()*1000).ToString();/////////////////////////
                 string signature = $"/api/{path}{nonce}{body}";
                 string sig = ComputeHmacSha384(_secretKey, signature);
 

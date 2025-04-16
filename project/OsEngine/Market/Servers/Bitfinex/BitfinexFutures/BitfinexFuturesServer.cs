@@ -248,7 +248,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                             newSecurity.Exchange = ServerType.BitfinexFutures.ToString();
                             newSecurity.Name = symbol;
                             newSecurity.NameFull = symbol;
-                            newSecurity.NameClass = "Futures"; //GetNameClass(symbol);
+                            newSecurity.NameClass = "Futures";/*GetNameClass(symbol);*/ 
                             newSecurity.NameId = symbol;
                             newSecurity.SecurityType = SecurityType.Futures;
                             newSecurity.Lot = 1;
@@ -339,17 +339,17 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             }
         }
 
-        //private string GetNameClass(string security)
-        //{
-        //    switch (security)
-        //    {
-        //        case string s when s.EndsWith("USTF0"):
-        //            return "Futures";
-              
-        //    }
+        private string GetNameClass(string security)
+        {
+            switch (security)
+            {
+                case string s when s.EndsWith("USTF0"):
+                    return "USDT";
 
-        //    return "Futures";
-        //}
+            }
+
+            return "Futures";
+        }
 
         public decimal GetMinSize(string symbol)
         {
@@ -369,7 +369,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
         public event Action<List<Portfolio>> PortfolioEvent;
 
-        private RateGate _rateGatePortfolio = new RateGate(1, TimeSpan.FromMilliseconds(750));
+        private RateGate _rateGatePortfolio = new RateGate(1, TimeSpan.FromMilliseconds(690));
 
         public void GetPortfolios()
         {
@@ -3015,7 +3015,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         {
             try
             {
-                string nonce = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()*1000).ToString();/////////////////////////
+                string nonce = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()).ToString();
                 string signature = $"/api/{path}{nonce}{body}";
                 string sig = ComputeHmacSha384(_secretKey, signature);
 

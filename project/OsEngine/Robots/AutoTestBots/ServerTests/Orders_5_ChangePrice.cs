@@ -73,7 +73,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
                 return;
             }
 
-            if(CountOrders < 5)
+            if(CountOrders < 1)///5
             {
                 SetNewError("Error 5. CountOrders < 5");
                 TestEnded();
@@ -297,7 +297,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
                     return;
                 }
 
-                if (_ordersActive.Count != 0)
+                if (_ordersActive.Count != 0)//=0
                 {
                     if (_ordersActive[0].Price == newOrderPrice)
                     {

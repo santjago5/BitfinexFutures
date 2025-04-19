@@ -22,6 +22,7 @@ using Com.Lmax.Api.Internal;
 using OsEngine.Market.Servers.Bitfinex.BitfinexFutures.Json;
 using System.Net.Http;
 using OsEngine.Market.Servers.GateIo.GateIoFutures.Entities;
+using System.Globalization;
 
 
 
@@ -2147,7 +2148,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     {
                         UpdateMyTrade(message);
                     }
-                    else if (message.StartsWith("[0,\"on\",[") || message.StartsWith("[0,\"oc\",[") || message.StartsWith("[0,\"ou\",["))
+                    else if (message.StartsWith("[0,\"on\",[") || message.StartsWith("[0,\"oc\",[") || message.StartsWith("[0,\"ou\",[") || message.Contains("ou-req"))
                     {
                         UpdateOrder(message);
                     }
@@ -2817,7 +2818,8 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 IRestResponse response = CreatePrivateQuery(_apiPath, Method.POST, body);
 
-                if (response.StatusCode != HttpStatusCode.OK)
+                if (response.StatusCode != HttpStatusCode.OK)//		string.Concat returned	"{\"type\":\"LIMIT\",\"symbol\":\"tEOSF0:USTF0\",\"amount\":\"2\",\"price\":\"0.61952680\",\"cid\":491}"	string
+
                 {
                     SendLogMessage($"Error Order exception {response.Content}", LogMessageType.Error);
                     order.State = OrderStateType.Fail;
@@ -2932,18 +2934,18 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
             try
             {
-                string price = newPrice.ToString().Replace(',', '.');
-                
+                string price = newPrice.ToString("F5", CultureInfo.InvariantCulture);
 
+                
                 if (order.TypeOrder == OrderPriceType.Market)
                 {
-                    SendLogMessage("ChangeOrderPrice> Can't change price for  Order Market", LogMessageType.Error);
+                    SendLogMessage("ChangeOrderPrice, Can't change price for  Order Market", LogMessageType.Error);
                     return;
                 }
 
                 string _apiPath = "v2/auth/w/order/update";
-                //string body = $"{{\"id\":{order.NumberMarket},\"price\":\"{price}\"}}";
                 string body = $"{{\"id\":{order.NumberMarket},\"price\":\"{price}\"}}";
+
 
                 IRestResponse response = CreatePrivateQuery(_apiPath, Method.POST, body);
 
@@ -2952,7 +2954,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     return;
                 }
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)//
                 {
                     string responseBody = response.Content;
 
@@ -3433,7 +3435,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         {
             try
             {
-                string nonce = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()).ToString();
+                string nonce = (DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()*1000).ToString();
                 string signature = $"/api/{path}{nonce}{body}";
                 string sig = ComputeHmacSha384(_secretKey, signature);
 

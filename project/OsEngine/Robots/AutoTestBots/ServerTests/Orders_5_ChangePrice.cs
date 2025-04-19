@@ -73,7 +73,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
                 return;
             }
 
-            if(CountOrders < 1)///5
+            if(CountOrders < 5)
             {
                 SetNewError("Error 5. CountOrders < 5");
                 TestEnded();

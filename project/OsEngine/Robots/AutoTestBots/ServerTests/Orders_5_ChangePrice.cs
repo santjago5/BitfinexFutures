@@ -297,7 +297,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
                     return;
                 }
 
-                if (_ordersActive.Count != 0)//=0
+                if (_ordersActive.Count != 0)
                 {
                     if (_ordersActive[0].Price == newOrderPrice)
                     {

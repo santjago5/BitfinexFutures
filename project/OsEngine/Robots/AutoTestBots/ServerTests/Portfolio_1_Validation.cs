@@ -258,7 +258,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
                 }
             }
 
-            if(currentValue >= 0)
+            if(currentValue >= 0)//////////////////////////
             {
                 SetNewError("Error 12. Value in portfolio >= 0");
                 return false;

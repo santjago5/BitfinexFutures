@@ -41,7 +41,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
     public class BitfinexFuturesServerRealization : IServerRealization
     {
         #region 1 Constructor, Status, Connection
-
+        
         public BitfinexFuturesServerRealization()
         {
             ServerStatus = ServerConnectStatus.Disconnect;

@@ -1221,10 +1221,8 @@
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_6_ChangePriceError.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_8_RequestOnReconnect.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_9_RequestLostActivOrder.cs" />
-    <Compile Include="..\..\..\..\..\Desktop\Portfolio_1_Validation.cs">
-      <Link>Robots\AutoTestBots\ServerTests\Portfolio_1_Validation.cs</Link>
-    </Compile>
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_7_Add_Move_Cancel_Spam.cs" />
+    <Compile Include="Robots\AutoTestBots\ServerTests\Portfolio_1_Validation.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Var_2_MarketDepth.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Var_1_Securities.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Var_3_Trades.cs" />

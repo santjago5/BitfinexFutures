@@ -18,10 +18,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
-using Com.Lmax.Api.Internal;
-using OsEngine.Market.Servers.Bitfinex.BitfinexFutures.Json;
-using System.Net.Http;
-using OsEngine.Market.Servers.GateIo.GateIoFutures.Entities;
+
 using System.Globalization;
 
 
@@ -453,13 +450,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 {
                     List<List<object>> wallets = JsonConvert.DeserializeObject<List<List<object>>>(response.Content);
 
-                    Portfolio portfolio = new Portfolio
-                    {
-                        Number = "BitfinexFuturesPortfolio",
-                        ValueBegin = 1,
-                        ValueCurrent = 1,
-                        ServerType = ServerType.BitfinexFutures
-                    };
+                    Portfolio portfolio = _portfolios[0];
 
                     for (int i = 0; i < wallets.Count; i++)
                     {
@@ -527,18 +518,20 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     for (int i = 0; i < positionsRaw.Count; i++)
                     {
-                        List<object> posu = positionsRaw[i];
+                        List<object> pos = positionsRaw[i];
 
                         var position = new PositionOnBoard();
 
                         position.PortfolioName = "BitfinexFuturesPortfolio";
-                        position.SecurityNameCode = posu[0].ToString();
-                        position.ValueCurrent = Math.Round(posu[2].ToString().ToDecimal(), 4);
-                        position.UnrealizedPnl = Math.Round(posu[6].ToString().ToDecimal(), 4);
+                        position.SecurityNameCode = pos[0].ToString();
+                        position.ValueCurrent = Math.Round(pos[2].ToString().ToDecimal(), 4);
+                        position.UnrealizedPnl = Math.Round(pos[6].ToString().ToDecimal(), 4);
 
                         portfolio.SetNewPosition(position);
+                        SendLogMessage($"{position.SecurityNameCode},{position.ValueCurrent} ,{position.UnrealizedPnl} ", LogMessageType.Error);
 
                     }
+                    PortfolioEvent.Invoke(_portfolios);
                 }
 
                 else
@@ -2009,55 +2002,49 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             }
         }
 
+
         private void UpdatePosition(string message)
         {
             try
             {
                 object[] data = JsonConvert.DeserializeObject<object[]>(message);
 
-                Portfolio portfolio = new Portfolio
-                {
-                    Number = "BitfinexFuturesPortfolio",
-                    ValueBegin = 1,
-                    ValueCurrent = 1,
-                    ServerType = ServerType.BitfinexFutures
-                };
-
                 if (data.Length >= 3)
                 {
-                    // Данные позиции — это один массив объектов
                     string json = JsonConvert.SerializeObject(data[2]);
+
                     List<object> positionArray = JsonConvert.DeserializeObject<List<object>>(json);
 
-                 
-
+                    Portfolio portfolio = _portfolios[0];
+                  
                     PositionOnBoard boardPosition = new PositionOnBoard();
 
                     boardPosition.PortfolioName = "BitfinexFuturesPortfolio";
                     boardPosition.SecurityNameCode = positionArray[0].ToString();
                     boardPosition.ValueCurrent = Math.Round(positionArray[2].ToString().ToDecimal(), 4);
 
-                    if(positionArray[6]!=null)
+                    if (positionArray[6] != null)
                     {
-                      boardPosition.UnrealizedPnl = Math.Round(positionArray[6].ToString().ToDecimal(), 6);
+                        boardPosition.UnrealizedPnl = Math.Round(positionArray[6].ToString().ToDecimal(), 6);
                     }
-                    
+
                     portfolio.SetNewPosition(boardPosition);
 
-                    SendLogMessage($" Обновлена позиция {boardPosition.SecurityNameCode}: {boardPosition.ValueCurrent} | PnL: {boardPosition.UnrealizedPnl}", LogMessageType.System);
+                    SendLogMessage($"Обновлена позиция {boardPosition.SecurityNameCode}: {boardPosition.ValueCurrent} | PnL: {boardPosition.UnrealizedPnl}", LogMessageType.System);
                 }
                 else
                 {
-                    SendLogMessage("Ошибка: данные позиции некорректны", LogMessageType.Error);
+                    SendLogMessage("Error: the position data is incorrect.", LogMessageType.Error);
                 }
+
+                PortfolioEvent?.Invoke(_portfolios);
             }
             catch (Exception exception)
             {
-                SendLogMessage(" Ошибка при обработке позиции: " + exception.ToString(), LogMessageType.Error);
+                SendLogMessage("Error, while processing the position: " + exception.ToString(), LogMessageType.Error);
             }
         }
-
-
+     
         private void SnapshotOrder(string message)
         {
 
@@ -2095,8 +2082,6 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                                 orders.Add(order);
                             }
                         }
-
-
                     }
                 }
                 else
@@ -2544,7 +2529,10 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 updateOrder.Volume = volume;
                 updateOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
 
+                SendLogMessage($"{updateOrder.TypeOrder},{volume},{updateOrder.Side}, ", LogMessageType.Error);
+
                 MyOrderEvent?.Invoke(updateOrder);
+
             }
             catch (Exception exception)
             {
@@ -2596,6 +2584,8 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                         position.ValueBlocked = 0;
                     }
                     portfolio.SetNewPosition(position);
+
+                 //   SendLogMessage($" {position.SecurityNameCode}, ValueBegin:{position.ValueBegin}, ValueCurrent:{ position.ValueCurrent }, ValueBlocked:{position.ValueBlocked},", LogMessageType.Error);
                 }
 
                 _portfolios.Add(portfolio);
@@ -2657,6 +2647,12 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 IRestResponse response = CreatePrivateQuery(_apiPath, Method.POST, body);
 
                 Thread.Sleep(100);
+
+                if(response.StatusCode == HttpStatusCode.OK)/////убрать
+                {
+                  SendLogMessage($"{body}", LogMessageType.Error);
+                }
+                
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {

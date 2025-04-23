@@ -1,0 +1,629 @@
+2025-04-23 12:32:08 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-23 12:32:08 [System] WebSocket public Trades Bitfinex open.
+2025-04-23 12:32:09 [System] All sockets activated.
+2025-04-23 12:32:09 [System] Connection to private data is Open
+2025-04-23 12:32:09 [System] All sockets activated.
+2025-04-23 12:32:09 [System] Start Bitfinex Connection
+2025-04-23 12:32:10 [System] WebSocket private opened
+2025-04-23 12:32:10 [System] WebSocket authentication successful
+2025-04-23 12:32:11 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66722,0,0,0.0010799999999999699,0.08093282575462139,0.7306059,10,null,182335101,null,null,null,1,null,0.133444,0.013344400000000001,{"reason":"TRADE","order_id":203305130503,"order_id_oppo":203306034650,"liq_stage":null,"trade_price":"0.66722","trade_amount":"-2.0","order_cid":808,"order_gid":null}]]
+2025-04-23 12:32:11 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:32:11 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:32:11 [Error] positionArray[2] = -2
+2025-04-23 12:32:11 [Error] positionArray[3] = 0.66722
+2025-04-23 12:32:11 [Error] positionArray[4] = 0
+2025-04-23 12:32:11 [Error] positionArray[5] = 0
+2025-04-23 12:32:11 [Error] positionArray[6] = 0.00107999999999997
+2025-04-23 12:32:11 [Error] positionArray[7] = 0.0809328257546214
+2025-04-23 12:32:11 [Error] positionArray[8] = 0.7306059
+2025-04-23 12:32:11 [Error] positionArray[9] = 10
+2025-04-23 12:32:11 [Error] positionArray[10] = 
+2025-04-23 12:32:11 [Error] positionArray[11] = 182335101
+2025-04-23 12:32:11 [Error] positionArray[12] = 
+2025-04-23 12:32:11 [Error] positionArray[13] = 
+2025-04-23 12:32:11 [Error] positionArray[14] = 
+2025-04-23 12:32:11 [Error] positionArray[15] = 1
+2025-04-23 12:32:11 [Error] positionArray[16] = 
+2025-04-23 12:32:11 [Error] positionArray[17] = 0.133444
+2025-04-23 12:32:11 [Error] positionArray[18] = 0.0133444
+2025-04-23 12:32:11 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203305130503,
+  "order_id_oppo": 203306034650,
+  "liq_stage": null,
+  "trade_price": "0.66722",
+  "trade_amount": "-2.0",
+  "order_cid": 808,
+  "order_gid": null
+}
+2025-04-23 12:32:11 [Error] Position update:tEOSF0:USTF0: -2 | PnL: 0.001080
+2025-04-23 12:32:13 [System] Securities loaded. Count: 85
+2025-04-23 12:32:21 [Error] tEOSF0:USTF0,-2 ,0.0011 
+2025-04-23 12:32:23 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-23 12:32:25 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66722,0,0,0.00008000000000008001,0.005995024129978118,0.7306059,10,null,182335101,null,null,null,1,null,0.133444,0.013344400000000001,{"reason":"TRADE","order_id":203305130503,"order_id_oppo":203306034650,"liq_stage":null,"trade_price":"0.66722","trade_amount":"-2.0","order_cid":808,"order_gid":null}]]
+2025-04-23 12:32:25 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:32:25 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:32:25 [Error] positionArray[2] = -2
+2025-04-23 12:32:25 [Error] positionArray[3] = 0.66722
+2025-04-23 12:32:25 [Error] positionArray[4] = 0
+2025-04-23 12:32:25 [Error] positionArray[5] = 0
+2025-04-23 12:32:25 [Error] positionArray[6] = 8.000000000008E-05
+2025-04-23 12:32:25 [Error] positionArray[7] = 0.00599502412997812
+2025-04-23 12:32:25 [Error] positionArray[8] = 0.7306059
+2025-04-23 12:32:25 [Error] positionArray[9] = 10
+2025-04-23 12:32:25 [Error] positionArray[10] = 
+2025-04-23 12:32:25 [Error] positionArray[11] = 182335101
+2025-04-23 12:32:25 [Error] positionArray[12] = 
+2025-04-23 12:32:25 [Error] positionArray[13] = 
+2025-04-23 12:32:25 [Error] positionArray[14] = 
+2025-04-23 12:32:25 [Error] positionArray[15] = 1
+2025-04-23 12:32:26 [Error] positionArray[16] = 
+2025-04-23 12:32:26 [Error] positionArray[17] = 0.133444
+2025-04-23 12:32:26 [Error] positionArray[18] = 0.0133444
+2025-04-23 12:32:26 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203305130503,
+  "order_id_oppo": 203306034650,
+  "liq_stage": null,
+  "trade_price": "0.66722",
+  "trade_amount": "-2.0",
+  "order_cid": 808,
+  "order_gid": null
+}
+2025-04-23 12:32:26 [Error] Position update:tEOSF0:USTF0: -2 | PnL: 0.000080
+2025-04-23 12:32:26 [Error] tEOSF0:USTF0,-2 ,0.0001 
+2025-04-23 12:32:29 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-1.96648862,0.66722,0,0,null,null,null,null,null,182335101,null,null,null,1,null,0.13120805,null,{"reason":"TRADE","order_id":203299926328,"order_id_oppo":203306552469,"liq_stage":null,"trade_price":"0.66718","trade_amount":"0.03351138","order_cid":1745404362015,"order_gid":null}]]
+2025-04-23 12:32:29 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:32:29 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:32:29 [Error] positionArray[2] = -1.96648862
+2025-04-23 12:32:29 [Error] positionArray[3] = 0.66722
+2025-04-23 12:32:29 [Error] positionArray[4] = 0
+2025-04-23 12:32:29 [Error] positionArray[5] = 0
+2025-04-23 12:32:29 [Error] positionArray[6] = 
+2025-04-23 12:32:29 [Error] positionArray[7] = 
+2025-04-23 12:32:29 [Error] positionArray[8] = 
+2025-04-23 12:32:29 [Error] positionArray[9] = 
+2025-04-23 12:32:29 [Error] positionArray[10] = 
+2025-04-23 12:32:29 [Error] positionArray[11] = 182335101
+2025-04-23 12:32:29 [Error] positionArray[12] = 
+2025-04-23 12:32:29 [Error] positionArray[13] = 
+2025-04-23 12:32:29 [Error] positionArray[14] = 
+2025-04-23 12:32:29 [Error] positionArray[15] = 1
+2025-04-23 12:32:29 [Error] positionArray[16] = 
+2025-04-23 12:32:29 [Error] positionArray[17] = 0.13120805
+2025-04-23 12:32:29 [Error] positionArray[18] = 
+2025-04-23 12:32:29 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203299926328,
+  "order_id_oppo": 203306552469,
+  "liq_stage": null,
+  "trade_price": "0.66718",
+  "trade_amount": "0.03351138",
+  "order_cid": 1745404362015,
+  "order_gid": null
+}
+2025-04-23 12:32:29 [Error] Position update:tEOSF0:USTF0: -1.9665 | PnL: 0
+2025-04-23 12:32:29 [Trade] MY TRADE: Buy 0.66718 0.03351138, Order: 203299926328
+2025-04-23 12:32:29 [Error] UpdatePosition RAW: [0,"pc",["tEOSF0:USTF0","CLOSED",0,0.66722,0,0,null,null,null,null,null,182335101,null,null,null,1,null,0.13120805,null,{"reason":"TRADE","order_id":203299926328,"order_id_oppo":203306577369,"liq_stage":null,"trade_price":"0.6675","trade_amount":"1.96648862","order_cid":1745404362015,"order_gid":null}]]
+2025-04-23 12:32:29 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:32:29 [Error] positionArray[1] = CLOSED
+2025-04-23 12:32:29 [Error] positionArray[2] = 0
+2025-04-23 12:32:29 [Error] positionArray[3] = 0.66722
+2025-04-23 12:32:29 [Error] positionArray[4] = 0
+2025-04-23 12:32:29 [Error] positionArray[5] = 0
+2025-04-23 12:32:29 [Error] positionArray[6] = 
+2025-04-23 12:32:29 [Error] positionArray[7] = 
+2025-04-23 12:32:29 [Error] positionArray[8] = 
+2025-04-23 12:32:29 [Error] positionArray[9] = 
+2025-04-23 12:32:29 [Error] positionArray[10] = 
+2025-04-23 12:32:29 [Error] positionArray[11] = 182335101
+2025-04-23 12:32:29 [Error] positionArray[12] = 
+2025-04-23 12:32:29 [Error] positionArray[13] = 
+2025-04-23 12:32:29 [Error] positionArray[14] = 
+2025-04-23 12:32:29 [Error] positionArray[15] = 1
+2025-04-23 12:32:29 [Error] positionArray[16] = 
+2025-04-23 12:32:29 [Error] positionArray[17] = 0.13120805
+2025-04-23 12:32:29 [Error] positionArray[18] = 
+2025-04-23 12:32:29 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203299926328,
+  "order_id_oppo": 203306577369,
+  "liq_stage": null,
+  "trade_price": "0.6675",
+  "trade_amount": "1.96648862",
+  "order_cid": 1745404362015,
+  "order_gid": null
+}
+2025-04-23 12:32:29 [Error] Position update:tEOSF0:USTF0: 0 | PnL: 0
+2025-04-23 12:32:29 [Trade] MY TRADE: Buy 0.6675 1.96648862, Order: 203299926328
+2025-04-23 12:32:29 [Error] ORDER STATE: Buy, Done, 0.66718, 2
+2025-04-23 12:32:29 [Trade] MY TRADE: Buy 0.6675 1.9656354097499975, Order: 203299926328
+2025-04-23 12:32:29 [Trade] MY TRADE: Buy 0.66718 0.03349684722036954, Order: 203299926328
+2025-04-23 12:33:04 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-23 12:33:04 [System] WebSocket public Trades Bitfinex open.
+2025-04-23 12:33:04 [System] All sockets activated.
+2025-04-23 12:33:04 [System] Connection to private data is Open
+2025-04-23 12:33:04 [System] All sockets activated.
+2025-04-23 12:33:04 [System] Start Bitfinex Connection
+2025-04-23 12:33:05 [System] WebSocket private opened
+2025-04-23 12:33:05 [System] WebSocket authentication successful
+2025-04-23 12:33:08 [System] Securities loaded. Count: 85
+2025-04-23 12:33:18 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-23 12:33:30 [Error] UpdatePosition RAW: [0,"pn",["tEOSF0:USTF0","ACTIVE",2,0.66675,0,0,null,null,null,null,null,182335102,null,null,null,1,null,0.13335,null,{"reason":"TRADE","order_id":203303380234,"order_id_oppo":203306553048,"liq_stage":null,"trade_price":"0.66675","trade_amount":"2.0","order_cid":811,"order_gid":null}]]
+2025-04-23 12:33:30 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:33:30 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:33:30 [Error] positionArray[2] = 2
+2025-04-23 12:33:30 [Error] positionArray[3] = 0.66675
+2025-04-23 12:33:30 [Error] positionArray[4] = 0
+2025-04-23 12:33:30 [Error] positionArray[5] = 0
+2025-04-23 12:33:30 [Error] positionArray[6] = 
+2025-04-23 12:33:30 [Error] positionArray[7] = 
+2025-04-23 12:33:30 [Error] positionArray[8] = 
+2025-04-23 12:33:30 [Error] positionArray[9] = 
+2025-04-23 12:33:30 [Error] positionArray[10] = 
+2025-04-23 12:33:30 [Error] positionArray[11] = 182335102
+2025-04-23 12:33:30 [Error] positionArray[12] = 
+2025-04-23 12:33:30 [Error] positionArray[13] = 
+2025-04-23 12:33:30 [Error] ORDER SENT [Buy]: tEOSF0:USTF0, 0,6734175, 2
+2025-04-23 12:33:30 [Error] positionArray[14] = 
+2025-04-23 12:33:30 [Error] positionArray[15] = 1
+2025-04-23 12:33:30 [Error] positionArray[16] = 
+2025-04-23 12:33:30 [Error] positionArray[17] = 0.13335
+2025-04-23 12:33:30 [Error] positionArray[18] = 
+2025-04-23 12:33:30 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203303380234,
+  "order_id_oppo": 203306553048,
+  "liq_stage": null,
+  "trade_price": "0.66675",
+  "trade_amount": "2.0",
+  "order_cid": 811,
+  "order_gid": null
+}
+2025-04-23 12:33:30 [Error] Position update:tEOSF0:USTF0: 2 | PnL: 0
+2025-04-23 12:33:30 [Trade] MY TRADE: Buy 0.66675 2, Order: 203303380234
+2025-04-23 12:33:30 [Error] ORDER STATE: Buy, Done, 0.67341, 2
+2025-04-23 12:33:30 [Trade] MY TRADE: Buy 0.66675 1.999133225, Order: 203303380234
+2025-04-23 12:33:31 [Error] UpdatePosition RAW: [0,"pc",["tEOSF0:USTF0","CLOSED",0,0.66675,0,0,null,null,null,null,null,182335102,null,null,null,1,null,0.13335,null,{"reason":"TRADE","order_id":203306228533,"order_id_oppo":203306553127,"liq_stage":null,"trade_price":"0.66662","trade_amount":"-2.0","order_cid":812,"order_gid":null}]]
+2025-04-23 12:33:31 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:33:31 [Error] positionArray[1] = CLOSED
+2025-04-23 12:33:31 [Error] positionArray[2] = 0
+2025-04-23 12:33:31 [Error] positionArray[3] = 0.66675
+2025-04-23 12:33:31 [Error] positionArray[4] = 0
+2025-04-23 12:33:31 [Error] positionArray[5] = 0
+2025-04-23 12:33:31 [Error] positionArray[6] = 
+2025-04-23 12:33:31 [Error] positionArray[7] = 
+2025-04-23 12:33:31 [Error] positionArray[8] = 
+2025-04-23 12:33:31 [Error] ORDER SENT [Sell]: tEOSF0:USTF0, 0,6600528, 2
+2025-04-23 12:33:31 [Error] positionArray[9] = 
+2025-04-23 12:33:31 [Error] positionArray[10] = 
+2025-04-23 12:33:31 [Error] positionArray[11] = 182335102
+2025-04-23 12:33:31 [Error] positionArray[12] = 
+2025-04-23 12:33:31 [Error] positionArray[13] = 
+2025-04-23 12:33:31 [Error] positionArray[14] = 
+2025-04-23 12:33:31 [Error] positionArray[15] = 1
+2025-04-23 12:33:31 [Error] positionArray[16] = 
+2025-04-23 12:33:31 [Error] positionArray[17] = 0.13335
+2025-04-23 12:33:31 [Error] positionArray[18] = 
+2025-04-23 12:33:31 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203306228533,
+  "order_id_oppo": 203306553127,
+  "liq_stage": null,
+  "trade_price": "0.66662",
+  "trade_amount": "-2.0",
+  "order_cid": 812,
+  "order_gid": null
+}
+2025-04-23 12:33:31 [Error] Position update:tEOSF0:USTF0: 0 | PnL: 0
+2025-04-23 12:33:31 [Trade] MY TRADE: Sell 0.66662 -2, Order: 203306228533
+2025-04-23 12:33:31 [Error] ORDER STATE: Sell, Done, 0.66006, 2
+2025-04-23 12:33:31 [Trade] MY TRADE: Sell 0.66662 -2.000866606, Order: 203306228533
+2025-04-23 12:35:33 [Error] UpdatePosition RAW: [0,"pn",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,null,null,null,null,null,182335103,null,null,null,1,null,0.133278,null,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:35:33 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:35:33 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:35:33 [Error] positionArray[2] = -2
+2025-04-23 12:35:33 [Error] positionArray[3] = 0.66639
+2025-04-23 12:35:33 [Error] positionArray[4] = 0
+2025-04-23 12:35:33 [Error] positionArray[5] = 0
+2025-04-23 12:35:33 [Error] positionArray[6] = 
+2025-04-23 12:35:33 [Error] positionArray[7] = 
+2025-04-23 12:35:33 [Error] positionArray[8] = 
+2025-04-23 12:35:33 [Error] ORDER SENT [Sell]: tEOSF0:USTF0, 0,6600528, 2
+2025-04-23 12:35:33 [Error] positionArray[9] = 
+2025-04-23 12:35:33 [Error] positionArray[10] = 
+2025-04-23 12:35:33 [Error] positionArray[11] = 182335103
+2025-04-23 12:35:33 [Error] positionArray[12] = 
+2025-04-23 12:35:33 [Error] positionArray[13] = 
+2025-04-23 12:35:33 [Error] positionArray[14] = 
+2025-04-23 12:35:33 [Error] positionArray[15] = 1
+2025-04-23 12:35:33 [Error] positionArray[16] = 
+2025-04-23 12:35:33 [Error] positionArray[17] = 0.133278
+2025-04-23 12:35:33 [Error] positionArray[18] = 
+2025-04-23 12:35:33 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:35:33 [Error] Position update:tEOSF0:USTF0: -2 | PnL: 0
+2025-04-23 12:35:33 [Trade] MY TRADE: Sell 0.66639 -2, Order: 203297065191
+2025-04-23 12:35:33 [Error] ORDER STATE: Sell, Done, 0.66006, 2
+2025-04-23 12:35:33 [Trade] MY TRADE: Sell 0.66639 -2.000866307, Order: 203297065191
+2025-04-23 12:35:36 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:35:40 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.00011999999999989797,-0.009003736550660871,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:35:40 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:35:40 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:35:40 [Error] positionArray[2] = -2
+2025-04-23 12:35:40 [Error] positionArray[3] = 0.66639
+2025-04-23 12:35:40 [Error] positionArray[4] = 0
+2025-04-23 12:35:40 [Error] positionArray[5] = 0
+2025-04-23 12:35:40 [Error] positionArray[6] = -0.000119999999999898
+2025-04-23 12:35:40 [Error] positionArray[7] = -0.00900373655066087
+2025-04-23 12:35:40 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:35:40 [Error] positionArray[9] = 10
+2025-04-23 12:35:41 [Error] positionArray[10] = 
+2025-04-23 12:35:41 [Error] positionArray[11] = 182335103
+2025-04-23 12:35:41 [Error] positionArray[12] = 
+2025-04-23 12:35:41 [Error] positionArray[13] = 
+2025-04-23 12:35:41 [Error] positionArray[14] = 
+2025-04-23 12:35:41 [Error] positionArray[15] = 1
+2025-04-23 12:35:41 [Error] positionArray[16] = 
+2025-04-23 12:35:41 [Error] positionArray[17] = 0.133278
+2025-04-23 12:35:41 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:35:41 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:35:41 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000120
+2025-04-23 12:35:42 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:35:47 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:35:48 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.00011999999999989797,-0.009003736550660871,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:35:48 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:35:49 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:35:49 [Error] positionArray[2] = -2
+2025-04-23 12:35:49 [Error] positionArray[3] = 0.66639
+2025-04-23 12:35:49 [Error] positionArray[4] = 0
+2025-04-23 12:35:49 [Error] positionArray[5] = 0
+2025-04-23 12:35:49 [Error] positionArray[6] = -0.000119999999999898
+2025-04-23 12:35:49 [Error] positionArray[7] = -0.00900373655066087
+2025-04-23 12:35:49 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:35:49 [Error] positionArray[9] = 10
+2025-04-23 12:35:49 [Error] positionArray[10] = 
+2025-04-23 12:35:49 [Error] positionArray[11] = 182335103
+2025-04-23 12:35:49 [Error] positionArray[12] = 
+2025-04-23 12:35:49 [Error] positionArray[13] = 
+2025-04-23 12:35:49 [Error] positionArray[14] = 
+2025-04-23 12:35:49 [Error] positionArray[15] = 1
+2025-04-23 12:35:49 [Error] positionArray[16] = 
+2025-04-23 12:35:49 [Error] positionArray[17] = 0.133278
+2025-04-23 12:35:49 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:35:49 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:35:49 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000120
+2025-04-23 12:35:52 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:35:57 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:36:02 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:36:03 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.00011999999999989797,-0.009003736550660871,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:36:03 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:36:03 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:36:04 [Error] positionArray[2] = -2
+2025-04-23 12:36:04 [Error] positionArray[3] = 0.66639
+2025-04-23 12:36:04 [Error] positionArray[4] = 0
+2025-04-23 12:36:04 [Error] positionArray[5] = 0
+2025-04-23 12:36:04 [Error] positionArray[6] = -0.000119999999999898
+2025-04-23 12:36:04 [Error] positionArray[7] = -0.00900373655066087
+2025-04-23 12:36:04 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:36:04 [Error] positionArray[9] = 10
+2025-04-23 12:36:04 [Error] positionArray[10] = 
+2025-04-23 12:36:04 [Error] positionArray[11] = 182335103
+2025-04-23 12:36:04 [Error] positionArray[12] = 
+2025-04-23 12:36:04 [Error] positionArray[13] = 
+2025-04-23 12:36:04 [Error] positionArray[14] = 
+2025-04-23 12:36:04 [Error] positionArray[15] = 1
+2025-04-23 12:36:04 [Error] positionArray[16] = 
+2025-04-23 12:36:04 [Error] positionArray[17] = 0.133278
+2025-04-23 12:36:04 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:36:04 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:36:04 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000120
+2025-04-23 12:36:08 [Error] tEOSF0:USTF0,-2 ,0.0001 
+2025-04-23 12:36:13 [Error] tEOSF0:USTF0,-2 ,0.0001 
+2025-04-23 12:36:18 [Error] tEOSF0:USTF0,-2 ,0.0001 
+2025-04-23 12:36:18 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,0.00006000000000017103,0.004501868275347096,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:36:18 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:36:18 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:36:18 [Error] positionArray[2] = -2
+2025-04-23 12:36:18 [Error] positionArray[3] = 0.66639
+2025-04-23 12:36:18 [Error] positionArray[4] = 0
+2025-04-23 12:36:18 [Error] positionArray[5] = 0
+2025-04-23 12:36:19 [Error] positionArray[6] = 6.0000000000171E-05
+2025-04-23 12:36:19 [Error] positionArray[7] = 0.0045018682753471
+2025-04-23 12:36:19 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:36:19 [Error] positionArray[9] = 10
+2025-04-23 12:36:19 [Error] positionArray[10] = 
+2025-04-23 12:36:19 [Error] positionArray[11] = 182335103
+2025-04-23 12:36:19 [Error] positionArray[12] = 
+2025-04-23 12:36:19 [Error] positionArray[13] = 
+2025-04-23 12:36:19 [Error] positionArray[14] = 
+2025-04-23 12:36:19 [Error] positionArray[15] = 1
+2025-04-23 12:36:19 [Error] positionArray[16] = 
+2025-04-23 12:36:19 [Error] positionArray[17] = 0.133278
+2025-04-23 12:36:19 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:36:19 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:36:19 [Error] Position update:tEOSF0:USTF0: -2 | PnL: 0.000060
+2025-04-23 12:36:23 [Error] tEOSF0:USTF0,-2 ,-0.0008 
+2025-04-23 12:36:28 [Error] tEOSF0:USTF0,-2 ,-0.0008 
+2025-04-23 12:36:33 [Error] tEOSF0:USTF0,-2 ,-0.0008 
+2025-04-23 12:36:34 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.0007599999999998719,-0.05699715014248327,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:36:34 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:36:34 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:36:34 [Error] positionArray[2] = -2
+2025-04-23 12:36:34 [Error] positionArray[3] = 0.66639
+2025-04-23 12:36:34 [Error] positionArray[4] = 0
+2025-04-23 12:36:34 [Error] positionArray[5] = 0
+2025-04-23 12:36:34 [Error] positionArray[6] = -0.000759999999999872
+2025-04-23 12:36:34 [Error] positionArray[7] = -0.0569971501424833
+2025-04-23 12:36:34 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:36:34 [Error] positionArray[9] = 10
+2025-04-23 12:36:34 [Error] positionArray[10] = 
+2025-04-23 12:36:34 [Error] positionArray[11] = 182335103
+2025-04-23 12:36:34 [Error] positionArray[12] = 
+2025-04-23 12:36:34 [Error] positionArray[13] = 
+2025-04-23 12:36:34 [Error] positionArray[14] = 
+2025-04-23 12:36:34 [Error] positionArray[15] = 1
+2025-04-23 12:36:34 [Error] positionArray[16] = 
+2025-04-23 12:36:34 [Error] positionArray[17] = 0.133278
+2025-04-23 12:36:34 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:36:34 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:36:34 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000760
+2025-04-23 12:36:39 [Error] tEOSF0:USTF0,-2 ,-0.0004 
+2025-04-23 12:36:44 [Error] tEOSF0:USTF0,-2 ,-0.0004 
+2025-04-23 12:36:48 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.00039999999999995595,-0.030012455168891783,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:36:48 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:36:49 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:36:49 [Error] positionArray[2] = -2
+2025-04-23 12:36:49 [Error] positionArray[3] = 0.66639
+2025-04-23 12:36:49 [Error] positionArray[4] = 0
+2025-04-23 12:36:49 [Error] positionArray[5] = 0
+2025-04-23 12:36:49 [Error] positionArray[6] = -0.000399999999999956
+2025-04-23 12:36:49 [Error] positionArray[7] = -0.0300124551688918
+2025-04-23 12:36:49 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:36:49 [Error] positionArray[9] = 10
+2025-04-23 12:36:49 [Error] positionArray[10] = 
+2025-04-23 12:36:49 [Error] positionArray[11] = 182335103
+2025-04-23 12:36:49 [Error] positionArray[12] = 
+2025-04-23 12:36:49 [Error] positionArray[13] = 
+2025-04-23 12:36:49 [Error] positionArray[14] = 
+2025-04-23 12:36:49 [Error] positionArray[15] = 1
+2025-04-23 12:36:49 [Error] positionArray[16] = 
+2025-04-23 12:36:49 [Error] positionArray[17] = 0.133278
+2025-04-23 12:36:49 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:36:49 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:36:49 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000400
+2025-04-23 12:36:49 [Error] tEOSF0:USTF0,-2 ,-0.0004 
+2025-04-23 12:36:54 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:36:59 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:37:03 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.00005999999999994898,-0.0045018682753304355,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:37:03 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:37:04 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:37:04 [Error] positionArray[2] = -2
+2025-04-23 12:37:04 [Error] positionArray[3] = 0.66639
+2025-04-23 12:37:04 [Error] positionArray[4] = 0
+2025-04-23 12:37:04 [Error] positionArray[5] = 0
+2025-04-23 12:37:04 [Error] positionArray[6] = -5.9999999999949E-05
+2025-04-23 12:37:04 [Error] positionArray[7] = -0.00450186827533044
+2025-04-23 12:37:04 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:37:04 [Error] positionArray[9] = 10
+2025-04-23 12:37:04 [Error] positionArray[10] = 
+2025-04-23 12:37:04 [Error] positionArray[11] = 182335103
+2025-04-23 12:37:04 [Error] positionArray[12] = 
+2025-04-23 12:37:04 [Error] positionArray[13] = 
+2025-04-23 12:37:04 [Error] positionArray[14] = 
+2025-04-23 12:37:04 [Error] positionArray[15] = 1
+2025-04-23 12:37:04 [Error] positionArray[16] = 
+2025-04-23 12:37:04 [Error] positionArray[17] = 0.133278
+2025-04-23 12:37:04 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:37:04 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:37:04 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000060
+2025-04-23 12:37:05 [Error] tEOSF0:USTF0,-2 ,-0.0001 
+2025-04-23 12:37:10 [Error] tEOSF0:USTF0,-2 ,-0.0011 
+2025-04-23 12:37:15 [Error] tEOSF0:USTF0,-2 ,-0.0011 
+2025-04-23 12:37:18 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.0010599999999998388,-0.07949364050874722,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:37:18 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:37:18 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:37:19 [Error] positionArray[2] = -2
+2025-04-23 12:37:19 [Error] positionArray[3] = 0.66639
+2025-04-23 12:37:19 [Error] positionArray[4] = 0
+2025-04-23 12:37:19 [Error] positionArray[5] = 0
+2025-04-23 12:37:19 [Error] positionArray[6] = -0.00105999999999984
+2025-04-23 12:37:19 [Error] positionArray[7] = -0.0794936405087472
+2025-04-23 12:37:19 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:37:19 [Error] positionArray[9] = 10
+2025-04-23 12:37:19 [Error] positionArray[10] = 
+2025-04-23 12:37:19 [Error] positionArray[11] = 182335103
+2025-04-23 12:37:19 [Error] positionArray[12] = 
+2025-04-23 12:37:19 [Error] positionArray[13] = 
+2025-04-23 12:37:19 [Error] positionArray[14] = 
+2025-04-23 12:37:19 [Error] positionArray[15] = 1
+2025-04-23 12:37:19 [Error] positionArray[16] = 
+2025-04-23 12:37:19 [Error] positionArray[17] = 0.133278
+2025-04-23 12:37:19 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:37:19 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:37:19 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.001060
+2025-04-23 12:37:20 [Error] tEOSF0:USTF0,-2 ,-0.0011 
+2025-04-23 12:37:25 [Error] tEOSF0:USTF0,-2 ,-0.0006 
+2025-04-23 12:37:31 [Error] tEOSF0:USTF0,-2 ,-0.0006 
+2025-04-23 12:37:33 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.0005999999999999339,-0.045018682753337674,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:37:33 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:37:34 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:37:34 [Error] positionArray[2] = -2
+2025-04-23 12:37:34 [Error] positionArray[3] = 0.66639
+2025-04-23 12:37:34 [Error] positionArray[4] = 0
+2025-04-23 12:37:34 [Error] positionArray[5] = 0
+2025-04-23 12:37:34 [Error] positionArray[6] = -0.000599999999999934
+2025-04-23 12:37:34 [Error] positionArray[7] = -0.0450186827533377
+2025-04-23 12:37:34 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:37:34 [Error] positionArray[9] = 10
+2025-04-23 12:37:34 [Error] positionArray[10] = 
+2025-04-23 12:37:34 [Error] positionArray[11] = 182335103
+2025-04-23 12:37:34 [Error] positionArray[12] = 
+2025-04-23 12:37:34 [Error] positionArray[13] = 
+2025-04-23 12:37:34 [Error] positionArray[14] = 
+2025-04-23 12:37:34 [Error] positionArray[15] = 1
+2025-04-23 12:37:34 [Error] positionArray[16] = 
+2025-04-23 12:37:34 [Error] positionArray[17] = 0.133278
+2025-04-23 12:37:34 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:37:34 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:37:34 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000600
+2025-04-23 12:37:36 [Error] tEOSF0:USTF0,-2 ,-0.0006 
+2025-04-23 12:37:41 [Error] tEOSF0:USTF0,-2 ,-0.0002 
+2025-04-23 12:37:46 [Error] tEOSF0:USTF0,-2 ,-0.0002 
+2025-04-23 12:37:48 [Error] UpdatePosition RAW: [0,"pu",["tEOSF0:USTF0","ACTIVE",-2,0.66639,0,0,-0.00017999999999984695,-0.013505199501796713,0.7296970500000001,10,null,182335103,null,null,null,1,null,0.133278,0.0133278,{"reason":"TRADE","order_id":203297065191,"order_id_oppo":203306686170,"liq_stage":null,"trade_price":"0.66639","trade_amount":"-2.0","order_cid":813,"order_gid":null}]]
+2025-04-23 12:37:49 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:37:49 [Error] positionArray[1] = ACTIVE
+2025-04-23 12:37:49 [Error] positionArray[2] = -2
+2025-04-23 12:37:49 [Error] positionArray[3] = 0.66639
+2025-04-23 12:37:49 [Error] positionArray[4] = 0
+2025-04-23 12:37:49 [Error] positionArray[5] = 0
+2025-04-23 12:37:49 [Error] positionArray[6] = -0.000179999999999847
+2025-04-23 12:37:49 [Error] positionArray[7] = -0.0135051995017967
+2025-04-23 12:37:49 [Error] positionArray[8] = 0.72969705
+2025-04-23 12:37:49 [Error] positionArray[9] = 10
+2025-04-23 12:37:49 [Error] positionArray[10] = 
+2025-04-23 12:37:49 [Error] positionArray[11] = 182335103
+2025-04-23 12:37:49 [Error] positionArray[12] = 
+2025-04-23 12:37:49 [Error] positionArray[13] = 
+2025-04-23 12:37:49 [Error] positionArray[14] = 
+2025-04-23 12:37:49 [Error] positionArray[15] = 1
+2025-04-23 12:37:49 [Error] positionArray[16] = 
+2025-04-23 12:37:49 [Error] positionArray[17] = 0.133278
+2025-04-23 12:37:49 [Error] positionArray[18] = 0.0133278
+2025-04-23 12:37:49 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203297065191,
+  "order_id_oppo": 203306686170,
+  "liq_stage": null,
+  "trade_price": "0.66639",
+  "trade_amount": "-2.0",
+  "order_cid": 813,
+  "order_gid": null
+}
+2025-04-23 12:37:49 [Error] Position update:tEOSF0:USTF0: -2 | PnL: -0.000180
+2025-04-23 12:37:51 [Error] tEOSF0:USTF0,-2 ,-0.0006 
+2025-04-23 12:37:56 [Error] tEOSF0:USTF0,-2 ,-0.0006 
+2025-04-23 12:38:02 [Error] tEOSF0:USTF0,-2 ,-0.0006 
+2025-04-23 12:38:02 [Error] UpdatePosition RAW: [0,"pc",["tEOSF0:USTF0","CLOSED",0,0.66639,0,0,null,null,null,null,null,182335103,null,null,null,1,null,0.133278,null,{"reason":"TRADE","order_id":203299926329,"order_id_oppo":203306828221,"liq_stage":null,"trade_price":"0.66671","trade_amount":"2.0","order_cid":1745404695748,"order_gid":null}]]
+2025-04-23 12:38:02 [Error] positionArray[0] = tEOSF0:USTF0
+2025-04-23 12:38:02 [Error] positionArray[1] = CLOSED
+2025-04-23 12:38:02 [Error] positionArray[2] = 0
+2025-04-23 12:38:02 [Error] positionArray[3] = 0.66639
+2025-04-23 12:38:02 [Error] positionArray[4] = 0
+2025-04-23 12:38:02 [Error] positionArray[5] = 0
+2025-04-23 12:38:02 [Error] positionArray[6] = 
+2025-04-23 12:38:02 [Error] positionArray[7] = 
+2025-04-23 12:38:02 [Error] positionArray[8] = 
+2025-04-23 12:38:02 [Error] positionArray[9] = 
+2025-04-23 12:38:03 [Error] positionArray[10] = 
+2025-04-23 12:38:03 [Error] positionArray[11] = 182335103
+2025-04-23 12:38:03 [Error] positionArray[12] = 
+2025-04-23 12:38:03 [Error] positionArray[13] = 
+2025-04-23 12:38:03 [Error] positionArray[14] = 
+2025-04-23 12:38:03 [Error] positionArray[15] = 1
+2025-04-23 12:38:03 [Error] positionArray[16] = 
+2025-04-23 12:38:03 [Error] positionArray[17] = 0.133278
+2025-04-23 12:38:03 [Error] positionArray[18] = 
+2025-04-23 12:38:03 [Error] positionArray[19] = {
+  "reason": "TRADE",
+  "order_id": 203299926329,
+  "order_id_oppo": 203306828221,
+  "liq_stage": null,
+  "trade_price": "0.66671",
+  "trade_amount": "2.0",
+  "order_cid": 1745404695748,
+  "order_gid": null
+}
+2025-04-23 12:38:03 [Error] Position update:tEOSF0:USTF0: 0 | PnL: 0
+2025-04-23 12:38:03 [Trade] MY TRADE: Buy 0.66671 2, Order: 203299926329
+2025-04-23 12:38:03 [Error] ORDER STATE: Buy, Done, 0.66671, 2
+2025-04-23 12:38:03 [Trade] MY TRADE: Buy 0.66671 1.999133277, Order: 203299926329

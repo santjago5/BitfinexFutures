@@ -20,6 +20,8 @@ using System.Threading;
 using Newtonsoft.Json;
 
 using System.Globalization;
+using System.IO;
+using ErrorEventArgs = WebSocketSharp.ErrorEventArgs;
 
 
 
@@ -2007,6 +2009,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         {
             try
             {
+                SendLogMessage("UpdatePosition RAW: " + message, LogMessageType.Error);
+
+
                 object[] data = JsonConvert.DeserializeObject<object[]>(message);
 
                 if (data.Length >= 3)
@@ -2015,8 +2020,18 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     List<object> positionArray = JsonConvert.DeserializeObject<List<object>>(json);
 
-                    Portfolio portfolio = _portfolios[0];
-                  
+                    //  Portfolio portfolio = _portfolios[0];
+                    Portfolio portfolio = _portfolios.Find(p => p.Number == "BitfinexFuturesPortfolio");
+                    if (portfolio == null)
+                    {
+                        SendLogMessage("UpdatePosition: Portfolio not found", LogMessageType.Error);
+                        return;
+                    }
+
+                    for (int i = 0; i < positionArray.Count; i++)
+                    {
+                        SendLogMessage($"positionArray[{i}] = {positionArray[i]}", LogMessageType.Error);
+                    }
                     PositionOnBoard boardPosition = new PositionOnBoard();
 
                     boardPosition.PortfolioName = "BitfinexFuturesPortfolio";
@@ -2030,12 +2045,14 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     portfolio.SetNewPosition(boardPosition);
 
-                    SendLogMessage($"Обновлена позиция {boardPosition.SecurityNameCode}: {boardPosition.ValueCurrent} | PnL: {boardPosition.UnrealizedPnl}", LogMessageType.System);
+                    SendLogMessage($"Position update:{boardPosition.SecurityNameCode}: {boardPosition.ValueCurrent} | PnL: {boardPosition.UnrealizedPnl}", LogMessageType.Error);
+            
                 }
                 else
                 {
                     SendLogMessage("Error: the position data is incorrect.", LogMessageType.Error);
                 }
+               
 
                 PortfolioEvent?.Invoke(_portfolios);
             }
@@ -2442,7 +2459,8 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 if (volume < 0)
                 {
-                    volume = Math.Abs(volume);
+                    //volume = Math.Abs(volume);
+                    volume = volume;
                 }
 
                 if (message.Contains("tu"))
@@ -2455,9 +2473,12 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     myTrade.Volume = volume;
                 }
 
+                
+
+                // SendLogMessage(myTrade.ToString(), LogMessageType.Trade);
+                SendLogMessage($"MY TRADE: {myTrade.Side} {myTrade.Price} {myTrade.Volume}, Order: {myTrade.NumberOrderParent}", LogMessageType.Trade);
                 MyTradeEvent?.Invoke(myTrade);
 
-                SendLogMessage(myTrade.ToString(), LogMessageType.Trade);
             }
             catch (Exception exception)
             {
@@ -2529,7 +2550,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 updateOrder.Volume = volume;
                 updateOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
 
-                SendLogMessage($"{updateOrder.TypeOrder},{volume},{updateOrder.Side}, ", LogMessageType.Error);
+              
+                SendLogMessage($"ORDER STATE: {updateOrder.Side}, {updateOrder.State}, {updateOrder.Price}, {updateOrder.Volume}", LogMessageType.Error);
+
 
                 MyOrderEvent?.Invoke(updateOrder);
 
@@ -2650,16 +2673,20 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 if(response.StatusCode == HttpStatusCode.OK)/////убрать
                 {
-                  SendLogMessage($"{body}", LogMessageType.Error);
+                  //SendLogMessage($"{body}", LogMessageType.Error);
+                   SendLogMessage($"ORDER SENT [{order.Side}]: {order.SecurityNameCode}, {order.Price}, {order.Volume}", LogMessageType.Error);
                 }
-                
-
-                if (response.StatusCode != HttpStatusCode.OK)
+                else
                 {
-                    SendLogMessage($"Error Order exception {response.Content}", LogMessageType.Error);
-                    order.State = OrderStateType.Fail;
-                    MyOrderEvent?.Invoke(order);
+                    SendLogMessage($"ORDER ERROR [{order.Side}]: Status={response.StatusCode}, Content={response.Content}", LogMessageType.Error);
                 }
+
+                //if (response.StatusCode != HttpStatusCode.OK)
+                //{
+                //    SendLogMessage($"Error Order exception {response.Content}", LogMessageType.Error);
+                //    order.State = OrderStateType.Fail;
+                //    MyOrderEvent?.Invoke(order);
+                //}
             }
             catch (Exception exception)
             {
@@ -3318,6 +3345,16 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         private void SendLogMessage(string message, LogMessageType messageType)
         {
             LogMessageEvent(message, messageType);
+            try
+            {
+                string logPath = "bitfinex_log.txt"; // путь к лог-файлу (в той же папке, где EXE)
+                string logLine = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " [" + messageType + "] " + message;
+                File.AppendAllText(logPath, logLine + Environment.NewLine);
+            }
+            catch
+            {
+                // если файл заблокирован или другая ошибка — просто молчим
+            }
         }
 
         #endregion

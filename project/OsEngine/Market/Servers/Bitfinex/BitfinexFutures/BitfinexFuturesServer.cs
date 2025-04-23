@@ -400,11 +400,11 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 {
                     Thread.Sleep(5000);
 
-                    //CreateQueryPortfolio(false);
-                    //CreateQueryPositions(false);
+                    CreateQueryPortfolio(false);
+                    CreateQueryPositions(false);
                     //GetUSDTMasterPortfolio(false);
-                    CreateQueryPortfolio(true);
-                    CreateQueryPositions(true);
+                    //CreateQueryPortfolio(true);
+                    //CreateQueryPositions(true);
                     //GetUSDTMasterPortfolio(true);
                 }
                 catch (Exception ex)
@@ -2459,9 +2459,10 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 if (volume < 0)
                 {
-                    //volume = Math.Abs(volume);
-                    volume = volume;
+                    volume = Math.Abs(volume);
+                   
                 }
+
 
                 if (message.Contains("tu"))
                 {
@@ -2541,10 +2542,10 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 updateOrder.ServerType = ServerType.BitfinexFutures;
                 decimal volume = (orderDataList[7]).ToString().ToDecimal();
 
-                if (volume < 0)
-                {
-                    volume = Math.Abs(volume);
-                }
+                //if (volume < 0)
+                //{
+                //    volume = Math.Abs(volume);
+                //}
 
                 updateOrder.VolumeExecute = volume;
                 updateOrder.Volume = volume;

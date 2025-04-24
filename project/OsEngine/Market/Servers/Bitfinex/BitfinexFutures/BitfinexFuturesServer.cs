@@ -43,7 +43,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
     public class BitfinexFuturesServerRealization : IServerRealization
     {
         #region 1 Constructor, Status, Connection
-        
+
         public BitfinexFuturesServerRealization()
         {
             ServerStatus = ServerConnectStatus.Disconnect;
@@ -2046,13 +2046,13 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     portfolio.SetNewPosition(boardPosition);
 
                     SendLogMessage($"Position update:{boardPosition.SecurityNameCode}: {boardPosition.ValueCurrent} | PnL: {boardPosition.UnrealizedPnl}", LogMessageType.Error);
-            
+
                 }
                 else
                 {
                     SendLogMessage("Error: the position data is incorrect.", LogMessageType.Error);
                 }
-               
+
 
                 PortfolioEvent?.Invoke(_portfolios);
             }
@@ -2061,7 +2061,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 SendLogMessage("Error, while processing the position: " + exception.ToString(), LogMessageType.Error);
             }
         }
-     
+
         private void SnapshotOrder(string message)
         {
 
@@ -2460,7 +2460,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 if (volume < 0)
                 {
                     volume = Math.Abs(volume);
-                   
+
                 }
 
 
@@ -2474,7 +2474,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     myTrade.Volume = volume;
                 }
 
-                
+
 
                 // SendLogMessage(myTrade.ToString(), LogMessageType.Trade);
                 SendLogMessage($"MY TRADE: {myTrade.Side} {myTrade.Price} {myTrade.Volume}, Order: {myTrade.NumberOrderParent}", LogMessageType.Trade);
@@ -2542,16 +2542,16 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 updateOrder.ServerType = ServerType.BitfinexFutures;
                 decimal volume = (orderDataList[7]).ToString().ToDecimal();
 
-                //if (volume < 0)
-                //{
-                //    volume = Math.Abs(volume);
-                //}
+                if (volume < 0)
+                {
+                    volume = Math.Abs(volume);
+                }
 
                 updateOrder.VolumeExecute = volume;
                 updateOrder.Volume = volume;
                 updateOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
 
-              
+
                 SendLogMessage($"ORDER STATE: {updateOrder.Side}, {updateOrder.State}, {updateOrder.Price}, {updateOrder.Volume}", LogMessageType.Error);
 
 
@@ -2609,7 +2609,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     }
                     portfolio.SetNewPosition(position);
 
-                 //   SendLogMessage($" {position.SecurityNameCode}, ValueBegin:{position.ValueBegin}, ValueCurrent:{ position.ValueCurrent }, ValueBlocked:{position.ValueBlocked},", LogMessageType.Error);
+                    //   SendLogMessage($" {position.SecurityNameCode}, ValueBegin:{position.ValueBegin}, ValueCurrent:{ position.ValueCurrent }, ValueBlocked:{position.ValueBlocked},", LogMessageType.Error);
                 }
 
                 _portfolios.Add(portfolio);
@@ -2644,6 +2644,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 newOrder.Cid = order.NumberUser.ToString();
                 newOrder.Symbol = order.SecurityNameCode;
                 order.PortfolioNumber = "BitfinexFuturesPortfolio";
+                int leverage = 2;
 
                 if (order.TypeOrder == OrderPriceType.Limit)
                 {
@@ -2666,28 +2667,16 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 }
 
                 string body = $"{{\"type\":\"{newOrder.OrderType}\",\"symbol\":\"{newOrder.Symbol}\"," +
-                    $"\"amount\":\"{newOrder.Amount}\",\"price\":\"{newOrder.Price}\",\"cid\":{newOrder.Cid}}}";
+              $"\"amount\":\"{newOrder.Amount}\",\"price\":\"{newOrder.Price}\",\"lev\":{leverage},\"cid\":{newOrder.Cid}}}";
 
                 IRestResponse response = CreatePrivateQuery(_apiPath, Method.POST, body);
 
-                Thread.Sleep(100);
-
-                if(response.StatusCode == HttpStatusCode.OK)/////убрать
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                  //SendLogMessage($"{body}", LogMessageType.Error);
-                   SendLogMessage($"ORDER SENT [{order.Side}]: {order.SecurityNameCode}, {order.Price}, {order.Volume}", LogMessageType.Error);
+                    SendLogMessage($"Error Order exception {response.Content}", LogMessageType.Error);
+                    order.State = OrderStateType.Fail;
+                    MyOrderEvent?.Invoke(order);
                 }
-                else
-                {
-                    SendLogMessage($"ORDER ERROR [{order.Side}]: Status={response.StatusCode}, Content={response.Content}", LogMessageType.Error);
-                }
-
-                //if (response.StatusCode != HttpStatusCode.OK)
-                //{
-                //    SendLogMessage($"Error Order exception {response.Content}", LogMessageType.Error);
-                //    order.State = OrderStateType.Fail;
-                //    MyOrderEvent?.Invoke(order);
-                //}
             }
             catch (Exception exception)
             {

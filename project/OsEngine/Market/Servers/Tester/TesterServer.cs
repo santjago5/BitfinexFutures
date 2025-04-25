@@ -71,9 +71,17 @@ namespace OsEngine.Market.Servers.Tester
             get { return ServerType.Tester; }
         }
 
+        public string ServerNameAndPrefix
+        {
+            get
+            {
+                return ServerType.ToString();
+            }
+        }
+
         private TesterServerUi _ui;
 
-        public void ShowDialog()
+        public void ShowDialog(int num = 0)
         {
             if (_ui == null)
             {
@@ -909,7 +917,6 @@ namespace OsEngine.Market.Servers.Tester
                         order.Price = lastCandle.Open;
                     }
 
-
                     if (CheckOrdersInCandleTest(order, lastCandle))
                     {
                         i--;
@@ -953,11 +960,14 @@ namespace OsEngine.Market.Servers.Tester
             if (order.IsStopOrProfit)
             {
                 int slippage = 0;
+
                 if (_slippageToStopOrder > 0)
                 {
                     slippage = _slippageToStopOrder;
                 }
+
                 decimal realPrice = order.Price;
+
                 if (order.Side == Side.Buy)
                 {
                     if (minPrice > realPrice)
@@ -1175,8 +1185,8 @@ namespace OsEngine.Market.Servers.Tester
                 {
                     slippage = _slippageToStopOrder;
                 }
-                decimal realPrice = order.Price;
 
+                decimal realPrice = order.Price;
                 ExecuteOnBoardOrder(order, realPrice, lastTrade.Time, slippage);
 
                 for (int i = 0; i < OrdersActive.Count; i++)
@@ -1356,8 +1366,8 @@ namespace OsEngine.Market.Servers.Tester
                 {
                     slippage = _slippageToStopOrder;
                 }
-                decimal realPrice = order.Price;
 
+                decimal realPrice = order.Price;
                 ExecuteOnBoardOrder(order, realPrice, time, slippage);
 
                 for (int i = 0; i < OrdersActive.Count; i++)
@@ -1443,7 +1453,9 @@ namespace OsEngine.Market.Servers.Tester
                     {
                         slippage = _slippageToSimpleOrder;
                     }
+
                     ExecuteOnBoardOrder(order, realPrice, time, slippage);
+
                     for (int i = 0; i < OrdersActive.Count; i++)
                     {
                         if (OrdersActive[i].NumberUser == order.NumberUser)
@@ -1499,6 +1511,7 @@ namespace OsEngine.Market.Servers.Tester
                     }
 
                     ExecuteOnBoardOrder(order, realPrice, time, slippage);
+
                     for (int i = 0; i < OrdersActive.Count; i++)
                     {
                         if (OrdersActive[i].NumberUser == order.NumberUser)
@@ -2451,7 +2464,7 @@ namespace OsEngine.Market.Servers.Tester
                 return;
             }
 
-            for(int i = 0;i < Securities.Count;i++)
+            for (int i = 0; i < Securities.Count; i++)
             {
                 if (Securities[i].Name == securityToSave.Name)
                 {
@@ -2459,9 +2472,9 @@ namespace OsEngine.Market.Servers.Tester
                 }
             }
 
-            for(int i = 0;i < SecuritiesTester.Count;i++)
+            for (int i = 0; i < SecuritiesTester.Count; i++)
             {
-                if(SecuritiesTester[i].Security.Name == securityToSave.Name)
+                if (SecuritiesTester[i].Security.Name == securityToSave.Name)
                 {
                     SecuritiesTester[i].Security.LoadFromString(securityToSave.GetSaveStr());
                 }
@@ -4208,7 +4221,7 @@ namespace OsEngine.Market.Servers.Tester
                 {
                     for (int i = 0; i < SecuritiesTester.Count; i++)
                     {
-                        if(reader.EndOfStream == true)
+                        if (reader.EndOfStream == true)
                         {
                             return;
                         }
@@ -4222,7 +4235,7 @@ namespace OsEngine.Market.Servers.Tester
 
                         TimeFrame frame;
 
-                        if(Enum.TryParse(security[1],out frame))
+                        if (Enum.TryParse(security[1], out frame))
                         {
                             SecuritiesTester[i].TimeFrame = frame;
                         }
@@ -4451,7 +4464,7 @@ namespace OsEngine.Market.Servers.Tester
             get { return _timeFrame; }
             set
             {
-                if(value == _timeFrame)
+                if (value == _timeFrame)
                 {
                     return;
                 }

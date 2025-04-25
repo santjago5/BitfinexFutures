@@ -23,8 +23,9 @@ namespace OsEngine.Market.Servers.BinGxSpot
 {
     public class BingXServerSpot : AServer
     {
-        public BingXServerSpot()
+        public BingXServerSpot(int uniqueNumber)
         {
+            ServerNum = uniqueNumber;
             BingXServerSpotRealization realization = new BingXServerSpotRealization();
             ServerRealization = realization;
 
@@ -611,6 +612,7 @@ namespace OsEngine.Market.Servers.BinGxSpot
             _webSocket.OnMessage += WebSocket_DataReceived;
             _webSocket.OnError += WebSocket_Error;
             _webSocket.OnClose += WebSocket_Closed;
+            
 
             _webSocket.Connect();
         }

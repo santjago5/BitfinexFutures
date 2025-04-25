@@ -24,8 +24,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 {
     public class BitfinexSpotServer : AServer
     {
-        public BitfinexSpotServer()
+        public BitfinexSpotServer(int uniqueNumber)
         {
+            ServerNum = uniqueNumber;
             BitfinexSpotServerRealization realization = new BitfinexSpotServerRealization();
             ServerRealization = realization;
 
@@ -2260,9 +2261,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                     volume = Math.Abs(volume);
                 }
 
-                string comissionSecName = tradeData[10].ToString();
+                string commissionSecName = tradeData[10].ToString();
 
-                if (myTrade.SecurityNameCode.StartsWith("t" + comissionSecName))
+                if (myTrade.SecurityNameCode.StartsWith("t" + commissionSecName))
                 {
                     myTrade.Volume = volume + tradeData[9].ToString().ToDecimal();
                 }
@@ -2829,9 +2830,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
                                     volume = Math.Abs(volume);
                                 }
 
-                                string comissionSecName = tradeData[10].ToString();
+                                string commissionSecName = tradeData[10].ToString();
 
-                                if (myTrade.SecurityNameCode.StartsWith("t" + comissionSecName))
+                                if (myTrade.SecurityNameCode.StartsWith("t" + commissionSecName))
                                 {
                                     myTrade.Volume = volume + tradeData[9].ToString().ToDecimal();
                                 }

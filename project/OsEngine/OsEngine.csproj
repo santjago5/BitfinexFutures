@@ -177,6 +177,28 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Content Include="bin\Debug\zlibd1.dll">
+      <Link>zlibd1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Content Include="bin\Release\zlib1.dll">
+      <Link>zlib1.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <Content Include="bin\$(Configuration)\libcrypto-3-x64.dll">
+      <Link>libcrypto-3-x64.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\$(Configuration)\libssl-3-x64.dll">
+      <Link>libssl-3-x64.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -450,10 +472,8 @@
     <Compile Include="Entity\HorizontalVolume.cs" />
     <Compile Include="Entity\MarketDepthPainter.cs" />
     <Compile Include="Entity\News.cs" />
-    <Compile Include="Entity\ProxyHolder.cs" />
-    <Compile Include="Entity\ProxyHolderAddUi.xaml.cs">
-      <DependentUpon>ProxyHolderAddUi.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Market\Proxy\ProxyOsa.cs" />
+    <Compile Include="Indicators\EmptyIndicator.cs" />
     <Compile Include="Indicators\IndicatorDataSeries.cs" />
     <Compile Include="Indicators\Samples\Sample1Blank.cs" />
     <Compile Include="Indicators\Samples\Sample2IndicatorParameters.cs" />
@@ -466,6 +486,25 @@
     <Compile Include="Market\Connectors\ConnectorNewsUi.xaml.cs">
       <DependentUpon>ConnectorNewsUi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Market\Proxy\ProxyMaster.cs" />
+    <Compile Include="Market\Proxy\ProxyMasterUi.xaml.cs">
+      <DependentUpon>ProxyMasterUi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Market\Servers\AExchange\AExchangeServer.cs" />
+    <Compile Include="Market\Servers\AExchange\AExchangeServerPermission.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\PlaceOrderMessage.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\CancelOrderMessage.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\Trade.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\PositionUpdate.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\AccountState.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\Accounts.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\InstrumentDefinition.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\Error.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\OrderStatus.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\Quotes.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\SubscribeOnQuoteMessage.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\LoginMessage.cs" />
+    <Compile Include="Market\Servers\AExchange\Json\WebSocketMessageBase.cs" />
     <Compile Include="Market\Servers\Alor\Json\RequestSocketSubscribe.cs" />
     <Compile Include="Market\Servers\Alor\Json\SocketMessageBase.cs" />
     <Compile Include="Market\Servers\Atp\AtpServer.cs" />
@@ -1213,6 +1252,7 @@
     <Compile Include="Robots\AutoTestBots\ServerTests\Data_4_Stress_Candles.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Data_5_Stress_Trades.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_10_RequestLostDoneOrder.cs" />
+    <Compile Include="Robots\AutoTestBots\ServerTests\Orders_11_RequestLostMyTrades.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_1_FakeOrders.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_2_LimitsExecute.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_3_MarketOrders.cs" />
@@ -1301,11 +1341,14 @@
     <Compile Include="Robots\Screeners\PinBarVolatilityScreener.cs" />
     <Compile Include="Robots\Screeners\PriceChannelAdaptiveRsiScreener.cs" />
     <Compile Include="Robots\TechSamples\AllSourcesInOneSample.cs" />
+    <Compile Include="Robots\TechSamples\BlockIndicatorsOnScreenerSample.cs" />
     <Compile Include="Robots\TechSamples\BlockIndicatorsSample.cs" />
     <Compile Include="Robots\TechSamples\CandlesLoggingSample.cs" />
     <Compile Include="Robots\TechSamples\ChangePriceBotExtStopMarket.cs" />
     <Compile Include="Robots\TechSamples\CustomChartInParamWindowSample.cs" />
+    <Compile Include="Robots\TechSamples\CustomDataInIndicatorSample.cs" />
     <Compile Include="Robots\TechSamples\CustomParamsUseBotSample.cs" />
+    <Compile Include="Robots\TechSamples\StopByTradeFeedSample.cs" />
     <Compile Include="Robots\TechSamples\VisualSettingsParametersExample.cs" />
     <Compile Include="Robots\OnScriptIndicators\FundBalanceDivergenceBot.cs" />
     <Compile Include="Robots\OnScriptIndicators\MacdRevers.cs" />
@@ -1635,10 +1678,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Entity\ProxyHolderAddUi.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Indicators\AIndicatorUi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1676,6 +1715,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Market\Connectors\MassSourcesCreateUi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Market\Proxy\ProxyMasterUi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

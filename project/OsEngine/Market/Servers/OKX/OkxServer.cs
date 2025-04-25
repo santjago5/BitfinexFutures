@@ -19,8 +19,9 @@ namespace OsEngine.Market.Servers.OKX
 {
     public class OkxServer : AServer
     {
-        public OkxServer()
+        public OkxServer(int uniqueNumber)
         {
+            ServerNum = uniqueNumber;
             OkxServerRealization realization = new OkxServerRealization();
             ServerRealization = realization;
 
@@ -28,8 +29,9 @@ namespace OsEngine.Market.Servers.OKX
             CreateParameterPassword(OsLocalization.Market.ServerParameterSecretKey, "");
             CreateParameterPassword(OsLocalization.Market.ServerParamPassword, "");
             CreateParameterEnum("Hedge Mode", "On", new List<string> { "On", "Off" });
-            CreateParameterEnum("Margin Mode", "Cross", new List<string> { "Cross", "Isolated" });
+            CreateParameterEnum("Margin Mode", "Cross", new List<string> { "Cross", "Isolated" });            
             CreateParameterBoolean(OsLocalization.Market.UseOptions, false);
+            CreateParameterEnum("Demo Mode", "Off", new List<string> { "Off", "On" });
         }
     }
 
@@ -90,6 +92,15 @@ namespace OsEngine.Market.Servers.OKX
             }
 
             _useOptions = ((ServerParameterBool)ServerParameters[5]).Value;
+
+            if (((ServerParameterEnum)ServerParameters[6]).Value == "Off")
+            {
+                _demoMode = false;
+            }
+            else
+            {
+                _demoMode = true;
+            }
 
             try
             {
@@ -185,12 +196,17 @@ namespace OsEngine.Market.Servers.OKX
 
         private string _webSocketUrlPrivate = "wss://ws.okx.com:8443/ws/v5/private";
 
+        private string _webSocketUrlPublicDemo = "wss://wspap.okx.com:8443/ws/v5/public";
+
+        private string _webSocketUrlPrivateDemo = "wss://wspap.okx.com:8443/ws/v5/private";
+
         private bool _hedgeMode;
 
         private string _marginMode;
 
         private bool _useOptions;
 
+        private bool _demoMode;
 
         #endregion
 
@@ -371,7 +387,7 @@ namespace OsEngine.Market.Servers.OKX
                     securityType = SecurityType.Option;
                 }
 
-                security.Lot = item.minSz.ToDecimal();
+                security.Lot = item.lotSz.ToDecimal();
 
                 string volStep = item.minSz.Replace(',', '.');
 
@@ -382,6 +398,9 @@ namespace OsEngine.Market.Servers.OKX
                     security.DecimalsVolume = volStep.Split('.')[1].Length;
                 }
 
+                security.MinTradeAmountType = MinTradeAmountType.Contract;
+                security.MinTradeAmount = item.minSz.ToDecimal();
+                security.VolumeStep = item.lotSz.ToDecimal();
                 security.Name = item.instId;
                 security.NameFull = item.instId;
 
@@ -400,6 +419,8 @@ namespace OsEngine.Market.Servers.OKX
                     {
                         security.NameClass = "SWAP_" + item.settleCcy;
                     }
+
+                    security.Lot = item.ctVal.ToDecimal();
                 }
 
                 if (securityType == SecurityType.Option)
@@ -412,6 +433,8 @@ namespace OsEngine.Market.Servers.OKX
                     {
                         security.NameClass = "OPTION_" + item.quoteCcy;
                     }
+
+                    security.Lot = item.ctVal.ToDecimal();
                 }
 
                 security.Exchange = ServerType.OKX.ToString();
@@ -821,6 +844,12 @@ namespace OsEngine.Market.Servers.OKX
             try
             {
                 WebSocket webSocketPublicNew = new WebSocket(_webSocketUrlPublic);
+
+                if (_demoMode)
+                {
+                    webSocketPublicNew = new WebSocket(_webSocketUrlPublicDemo);
+                }
+
                 webSocketPublicNew.SslConfiguration.EnabledSslProtocols
                     = System.Security.Authentication.SslProtocols.Ssl3
                     | System.Security.Authentication.SslProtocols.Tls11
@@ -835,7 +864,7 @@ namespace OsEngine.Market.Servers.OKX
                 webSocketPublicNew.OnError += WebSocketPublic_Error;
                 webSocketPublicNew.Connect();
 
-                return webSocketPublicNew;
+                return webSocketPublicNew;               
             }
             catch (Exception exception)
             {
@@ -854,6 +883,12 @@ namespace OsEngine.Market.Servers.OKX
                 }
 
                 _webSocketPrivate = new WebSocket(_webSocketUrlPrivate);
+
+                if (_demoMode)
+                {
+                    _webSocketPrivate = new WebSocket(_webSocketUrlPrivateDemo);
+                }
+
                 _webSocketPrivate.SslConfiguration.EnabledSslProtocols
                     = System.Security.Authentication.SslProtocols.Ssl3
                    | System.Security.Authentication.SslProtocols.Tls11
@@ -1004,7 +1039,7 @@ namespace OsEngine.Market.Servers.OKX
         {
             string url = $"{_baseUrl}{"/api/v5/account/set-position-mode"}";
             string bodyStr = JsonConvert.SerializeObject(requestParams);
-            HttpClient client = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, bodyStr));
+            HttpClient client = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, bodyStr, _demoMode));
 
             HttpResponseMessage res = client.PostAsync(url, new StringContent(bodyStr, Encoding.UTF8, "application/json")).Result;
             string contentStr = res.Content.ReadAsStringAsync().Result;
@@ -1961,13 +1996,39 @@ namespace OsEngine.Market.Servers.OKX
                     if (newOrder.State == OrderStateType.Partial ||
                         newOrder.State == OrderStateType.Done)
                     {
-                        Thread.Sleep(500);
-                        List<MyTrade> tradesInOrder = GenerateTradesToOrder(newOrder, 1);
+                        ResponseWsOrders item = OrderResponse.data[i];
 
-                        for (int i2 = 0; tradesInOrder != null && i2 < tradesInOrder.Count; i2++)
+                        MyTrade myTrade = new MyTrade();
+
+                        myTrade.Time = TimeManager.GetDateTimeFromTimeStamp(Convert.ToInt64(item.cTime));
+                        myTrade.NumberOrderParent = item.ordId.ToString();
+                        myTrade.NumberTrade = item.tradeId.ToString();
+
+                        if (string.IsNullOrEmpty(item.fee))
                         {
-                            MyTradeEvent(tradesInOrder[i2]);
+                            myTrade.Volume = item.fillSz.ToDecimal();
                         }
+                        else
+                        {// there is a commission
+                            if (item.instId.StartsWith(item.feeCcy))
+                            { // the commission is taken in the traded currency, not in the exchange currency
+                                myTrade.Volume = item.fillSz.ToDecimal() + item.fee.ToDecimal();
+                            }
+                            else
+                            {
+                                myTrade.Volume = item.fillSz.ToDecimal();
+                            }
+                        }
+
+                        if (!item.fillPx.Equals(String.Empty))
+                        {
+                            myTrade.Price = item.fillPx.ToDecimal();
+                        }
+
+                        myTrade.SecurityNameCode = item.instId;
+                        myTrade.Side = item.side.Equals("buy") ? Side.Buy : Side.Sell;
+
+                        MyTradeEvent(myTrade);
                     }
                 }
             }
@@ -2245,7 +2306,7 @@ namespace OsEngine.Market.Servers.OKX
 
                 string url = $"{_baseUrl}/api/v5/trade/order";
 
-                HttpClient responseMessage = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, json));
+                HttpClient responseMessage = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, json, _demoMode));
                 HttpResponseMessage res = responseMessage.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json")).Result;
                 string contentStr = res.Content.ReadAsStringAsync().Result;
 
@@ -2299,7 +2360,7 @@ namespace OsEngine.Market.Servers.OKX
 
                 string url = $"{_baseUrl}/api/v5/trade/order";
 
-                HttpClient responseMessage = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, json));
+                HttpClient responseMessage = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, json, _demoMode));
                 HttpResponseMessage res = responseMessage.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json")).Result;
                 string contentStr = res.Content.ReadAsStringAsync().Result;
 
@@ -2342,7 +2403,7 @@ namespace OsEngine.Market.Servers.OKX
 
                 string url = $"{_baseUrl}/api/v5/trade/cancel-order";
 
-                HttpClient responseMessage = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, json));
+                HttpClient responseMessage = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, json, _demoMode));
                 HttpResponseMessage res = responseMessage.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json")).Result;
                 string contentStr = res.Content.ReadAsStringAsync().Result;
 
@@ -2350,7 +2411,7 @@ namespace OsEngine.Market.Servers.OKX
 
                 if (message.code.Equals("1"))
                 {
-                    CreateOrderFail(order);
+                    GetOrderStatus(order);
                     SendLogMessage($"CancelOrder - {message.data[0].sMsg}", LogMessageType.Error);
                 }
             }
@@ -2425,13 +2486,53 @@ namespace OsEngine.Market.Servers.OKX
                 HttpResponseMessage res = GetPrivateRequest(url);
                 string contentStr = res.Content.ReadAsStringAsync().Result;
 
-                if (res.StatusCode != HttpStatusCode.OK)
+                if (res.StatusCode == HttpStatusCode.OK)
+                {
+                    ResponseWsMessageAction<List<ResponseWsOrders>> OrderResponse = JsonConvert.DeserializeAnonymousType(contentStr, new ResponseWsMessageAction<List<ResponseWsOrders>>());
+
+                    if (OrderResponse.data == null || OrderResponse.data.Count == 0)
+                    {
+                        return;
+                    }
+
+                    for (int i = 0; i < OrderResponse.data.Count; i++)
+                    {
+                        Order newOrder = null;
+
+                        if ((OrderResponse.data[i].ordType.Equals("limit") ||
+                        OrderResponse.data[i].ordType.Equals("market")))
+                        {
+                            newOrder = OrderUpdate(OrderResponse.data[i]);
+                        }
+
+                        if (newOrder == null)
+                        {
+                            continue;
+                        }
+
+                        if (MyOrderEvent != null)
+                        {
+                            MyOrderEvent(newOrder);
+                        }
+
+                        if (newOrder.State == OrderStateType.Partial ||
+                            newOrder.State == OrderStateType.Done)
+                        {
+                            Thread.Sleep(500);
+                            List<MyTrade> tradesInOrder = GenerateTradesToOrder(newOrder, 1);
+
+                            for (int i2 = 0; tradesInOrder != null && i2 < tradesInOrder.Count; i2++)
+                            {
+                                MyTradeEvent(tradesInOrder[i2]);
+                            }
+                        }
+                    }
+                }
+                else
                 {
                     SendLogMessage($"GetOrderStatus - {contentStr}", LogMessageType.Error);
                     return;
                 }
-
-                UpdateOrder(contentStr);
             }
             catch (Exception ex)
             {
@@ -2595,7 +2696,7 @@ namespace OsEngine.Market.Servers.OKX
 
         public HttpResponseMessage GetPrivateRequest(string url)
         {
-            HttpClient _client = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, null));
+            HttpClient _client = new HttpClient(new HttpInterceptor(_publicKey, _secretKey, _password, null, _demoMode));
             return _client.GetAsync(url).Result;
         }
 

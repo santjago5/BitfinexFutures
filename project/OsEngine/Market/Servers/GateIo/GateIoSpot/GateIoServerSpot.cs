@@ -25,8 +25,9 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
 {
     public class GateIoServerSpot : AServer
     {
-        public GateIoServerSpot()
+        public GateIoServerSpot(int uniqueNumber)
         {
+            ServerNum = uniqueNumber;
             ServerRealization = new GateIoServerSpotRealization();
             CreateParameterString(OsLocalization.Market.ServerParamPublicKey, "");
             CreateParameterPassword(OsLocalization.Market.ServerParameterSecretKey, "");
@@ -208,8 +209,11 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
 
                 if (current.min_base_amount != null)
                 {
-                    security.MinTradeAmount = current.min_base_amount.ToDecimal();
+                    security.VolumeStep = current.min_base_amount.ToDecimal();
                 }
+
+                security.MinTradeAmount = current.min_quote_amount.ToDecimal();
+                security.MinTradeAmountType = MinTradeAmountType.C_Currency;
 
                 _securities.Add(security);
             }
@@ -703,11 +707,18 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
                 {
                     return;
                 }
+
                 if (string.IsNullOrEmpty(e.Data))
                 {
                     return;
                 }
+
                 if (_fifoListWebSocketMessage == null)
+                {
+                    return;
+                }
+
+                if (e.Data.Contains("spot.pong"))
                 {
                     return;
                 }
@@ -764,7 +775,7 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
 
                     if (_webSocket != null && _webSocket.ReadyState == WebSocketState.Open)
                     {
-                        if (_timeLastSendPing.AddSeconds(30) < DateTime.Now)
+                        if (_timeLastSendPing.AddSeconds(20) < DateTime.Now)
                         {
                             SendPing();
                             _timeLastSendPing = DateTime.Now;
@@ -1168,9 +1179,9 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
                     newTrade.NumberTrade = responseMyTrade.result[i].id;
                     newTrade.Side = responseMyTrade.result[i].side.Equals("sell") ? Side.Sell : Side.Buy;
 
-                    string comissionSecName = responseMyTrade.result[i].fee_currency;
+                    string commissionSecName = responseMyTrade.result[i].fee_currency;
 
-                    if (newTrade.SecurityNameCode.StartsWith(comissionSecName))
+                    if (newTrade.SecurityNameCode.StartsWith(commissionSecName))
                     {
                         newTrade.Volume = responseMyTrade.result[i].amount.ToDecimal() - responseMyTrade.result[i].fee.ToDecimal();
                         int decimalVolum = GetDecimalsVolume(security);
@@ -1411,6 +1422,7 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
 
                 if (responseMessage.StatusCode != System.Net.HttpStatusCode.OK)
                 {
+                    GetOrderStatus(order);
                     SendLogMessage($"CancelOrder. Error: {responseMessage.Content}", LogMessageType.Error);
                 }
             }
@@ -1752,9 +1764,9 @@ namespace OsEngine.Market.Servers.GateIo.GateIoSpot
                             newTrade.NumberTrade = responseMyTrade[i].id;
                             newTrade.Side = responseMyTrade[i].side.Equals("sell") ? Side.Sell : Side.Buy;
 
-                            string comissionSecName = responseMyTrade[i].fee_currency;
+                            string commissionSecName = responseMyTrade[i].fee_currency;
 
-                            if (newTrade.SecurityNameCode.StartsWith(comissionSecName))
+                            if (newTrade.SecurityNameCode.StartsWith(commissionSecName))
                             {
                                 newTrade.Volume = responseMyTrade[i].amount.ToDecimal() - responseMyTrade[i].fee.ToDecimal();
                                 int decimalVolum = GetDecimalsVolume(security);

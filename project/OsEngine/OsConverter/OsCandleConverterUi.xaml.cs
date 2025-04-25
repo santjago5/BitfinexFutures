@@ -1,4 +1,9 @@
-﻿using OsEngine.Entity;
+﻿/*
+ * Your rights to use code governed by this license https://github.com/AlexWan/OsEngine/blob/master/LICENSE
+ * Ваши права на использование кода регулируются данной лицензией http://o-s-a.net/doc/license_simple_engine.pdf
+*/
+
+using OsEngine.Entity;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -6,9 +11,6 @@ using OsEngine.Language;
 
 namespace OsEngine.OsConverter
 {
-    /// <summary>
-    /// Interaction logic for OsCandleConverterUi.xaml
-    /// </summary>
     public partial class OsCandleConverterUi : Window
     {
         private CandleConverter _candleConverter;
@@ -41,16 +43,16 @@ namespace OsEngine.OsConverter
         {
             try
             {
-                decimal devider = 1;
+                decimal divider = 1;
 
                 if (ComboBoxTimeFrameInitial.SelectedItem.ToString() == TimeFrame.Min5.ToString())
                 {
-                    devider = 5;
+                    divider = 5;
                 }
 
                 List<Candle> candles = _candleConverter.ReadSourceFile();
                 List<Candle> mergedCandles = _candleConverter.Merge(candles,
-                    Convert.ToInt32(_candleConverter.ResultCandleTimeFrame / (double)devider));
+                    Convert.ToInt32(_candleConverter.ResultCandleTimeFrame / (double)divider));
 
                 _candleConverter.WriteExitFile(mergedCandles);
                 _candleConverter.SendNewLogMessage("The operation is complete", Logging.LogMessageType.System);

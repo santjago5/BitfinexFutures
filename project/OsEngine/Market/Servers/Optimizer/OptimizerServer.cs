@@ -49,7 +49,15 @@ namespace OsEngine.Market.Servers.Optimizer
             get { return ServerType.Optimizer; }
         }
 
-        public void ShowDialog()
+        public string ServerNameAndPrefix
+        {
+            get
+            {
+                return ServerType.ToString();
+            }
+        }
+
+        public void ShowDialog(int num = 0)
         {
 
         }
@@ -546,6 +554,12 @@ namespace OsEngine.Market.Servers.Optimizer
                 else if (security.DataType == SecurityTesterDataType.Candle)
                 { // running on candles / прогон на свечках
                     Candle lastCandle = security.LastCandle;
+
+                    if (order.Price == 0)
+                    {
+                        order.Price = lastCandle.Open;
+                    }
+
                     if (CheckOrdersInCandleTest(order, lastCandle))
                     {
                         i--;
@@ -579,7 +593,8 @@ namespace OsEngine.Market.Servers.Optimizer
                 time = lastCandle.TimeStart;
             }
 
-            if (time <= order.TimeCallBack && !order.IsStopOrProfit)
+            if (time <= order.TimeCallBack
+                && order.IsStopOrProfit != true)
             {
                 //CanselOnBoardOrder(order);
                 return false;
@@ -587,8 +602,15 @@ namespace OsEngine.Market.Servers.Optimizer
 
             if (order.IsStopOrProfit)
             {
+                int slippage = 0;
+
+                if (_slippageToStopOrder > 0)
+                {
+                    slippage = _slippageToStopOrder;
+                }
 
                 decimal realPrice = order.Price;
+
                 if (order.Side == Side.Buy)
                 {
                     if (minPrice > realPrice)
@@ -602,12 +624,6 @@ namespace OsEngine.Market.Servers.Optimizer
                     {
                         realPrice = lastCandle.Open;
                     }
-                }
-
-                int slippage = 0;
-                if (_slippageToStopOrder > 0)
-                {
-                    slippage = _slippageToStopOrder;
                 }
 
                 ExecuteOnBoardOrder(order, realPrice, time, slippage);
@@ -688,6 +704,11 @@ namespace OsEngine.Market.Servers.Optimizer
                         slippage = _slippageToSimpleOrder;
                     }
 
+                    if (realPrice > maxPrice)
+                    {
+                        realPrice = maxPrice;
+                    }
+
                     ExecuteOnBoardOrder(order, realPrice, time, slippage);
 
                     for (int i = 0; i < OrdersActive.Count; i++)
@@ -748,6 +769,11 @@ namespace OsEngine.Market.Servers.Optimizer
                         slippage = _slippageToSimpleOrder;
                     }
 
+                    if (realPrice < minPrice)
+                    {
+                        realPrice = minPrice;
+                    }
+
                     ExecuteOnBoardOrder(order, realPrice, time, slippage);
 
                     for (int i = 0; i < OrdersActive.Count; i++)
@@ -758,7 +784,6 @@ namespace OsEngine.Market.Servers.Optimizer
                             break;
                         }
                     }
-
 
                     if (OrderExecutionType == OrderExecutionType.FiftyFifty)
                     {
@@ -825,9 +850,15 @@ namespace OsEngine.Market.Servers.Optimizer
                     return false;
                 }
 
+                int slippage = 0;
+                if (_slippageToSimpleOrder > 0)
+                {
+                    slippage = _slippageToSimpleOrder;
+                }
+
                 decimal realPrice = lastTrade.Price;
 
-                ExecuteOnBoardOrder(order, realPrice, lastTrade.Time, 0);
+                ExecuteOnBoardOrder(order, realPrice, lastTrade.Time, slippage);
 
                 for (int i = 0; i < OrdersActive.Count; i++)
                 {
@@ -961,9 +992,8 @@ namespace OsEngine.Market.Servers.Optimizer
             {
                 return false;
             }
-            decimal maxPrice = lastMarketDepth.Asks[0].Price;
-            decimal minPrice = lastMarketDepth.Bids[0].Price;
-            decimal openPrice = lastMarketDepth.Asks[0].Price;
+            decimal sellBestPrice = lastMarketDepth.Asks[0].Price;
+            decimal buyBestPrice = lastMarketDepth.Bids[0].Price;
 
             DateTime time = lastMarketDepth.Time;
 
@@ -980,6 +1010,7 @@ namespace OsEngine.Market.Servers.Optimizer
                 {
                     slippage = _slippageToStopOrder;
                 }
+
                 decimal realPrice = order.Price;
                 ExecuteOnBoardOrder(order, realPrice, time, slippage);
 
@@ -1006,11 +1037,11 @@ namespace OsEngine.Market.Servers.Optimizer
 
                 if (order.Side == Side.Buy)
                 {
-                    realPrice = maxPrice;
+                    realPrice = sellBestPrice;
                 }
                 else //if(order.Side == Side.Sell)
                 {
-                    realPrice = minPrice;
+                    realPrice = buyBestPrice;
                 }
 
                 int slippage = 0;
@@ -1036,29 +1067,24 @@ namespace OsEngine.Market.Servers.Optimizer
             // check the order / проверяем, прошёл ли ордер
             if (order.Side == Side.Buy)
             {
-                if ((OrderExecutionType == OrderExecutionType.Intersection && order.Price > minPrice)
+                if ((OrderExecutionType == OrderExecutionType.Intersection && order.Price > buyBestPrice)
                    ||
-                   (OrderExecutionType == OrderExecutionType.Touch && order.Price >= minPrice)
+                   (OrderExecutionType == OrderExecutionType.Touch && order.Price >= buyBestPrice)
                    ||
                    (OrderExecutionType == OrderExecutionType.FiftyFifty &&
                    _lastOrderExecutionTypeInFiftyFiftyType == OrderExecutionType.Intersection &&
-                   order.Price > minPrice)
+                   order.Price > buyBestPrice)
                    ||
                    (OrderExecutionType == OrderExecutionType.FiftyFifty &&
                    _lastOrderExecutionTypeInFiftyFiftyType == OrderExecutionType.Touch &&
-                   order.Price >= minPrice)
+                   order.Price >= buyBestPrice)
                    )
                 {
                     decimal realPrice = order.Price;
 
-                    if (realPrice > openPrice && order.IsStopOrProfit == false)
+                    if (realPrice > sellBestPrice)
                     {
-                        // if order is not quotation and put into the market / если заявка не котировачная и выставлена в рынок
-                        realPrice = openPrice;
-                    }
-                    else if (order.IsStopOrProfit && order.Price > maxPrice)
-                    {
-                        realPrice = maxPrice;
+                        realPrice = sellBestPrice;
                     }
 
                     int slippage = 0;
@@ -1071,6 +1097,7 @@ namespace OsEngine.Market.Servers.Optimizer
                     {
                         slippage = _slippageToSimpleOrder;
                     }
+
                     ExecuteOnBoardOrder(order, realPrice, time, slippage);
 
                     for (int i = 0; i < OrdersActive.Count; i++)
@@ -1095,31 +1122,26 @@ namespace OsEngine.Market.Servers.Optimizer
 
             if (order.Side == Side.Sell)
             {
-                if ((OrderExecutionType == OrderExecutionType.Intersection && order.Price < maxPrice)
+                if ((OrderExecutionType == OrderExecutionType.Intersection && order.Price < sellBestPrice)
                     ||
-                    (OrderExecutionType == OrderExecutionType.Touch && order.Price <= maxPrice)
+                    (OrderExecutionType == OrderExecutionType.Touch && order.Price <= sellBestPrice)
                     ||
                     (OrderExecutionType == OrderExecutionType.FiftyFifty &&
                      _lastOrderExecutionTypeInFiftyFiftyType == OrderExecutionType.Intersection &&
-                     order.Price < maxPrice)
+                     order.Price < sellBestPrice)
                     ||
                     (OrderExecutionType == OrderExecutionType.FiftyFifty &&
                      _lastOrderExecutionTypeInFiftyFiftyType == OrderExecutionType.Touch &&
-                     order.Price <= maxPrice)
+                     order.Price <= sellBestPrice)
                     )
                 {
                     // execute
                     // исполняем
                     decimal realPrice = order.Price;
 
-                    if (realPrice < openPrice && order.IsStopOrProfit == false)
+                    if (realPrice < buyBestPrice)
                     {
-                        // if order is not quotation and put into the market / если заявка не котировачная и выставлена в рынок
-                        realPrice = openPrice;
-                    }
-                    else if (order.IsStopOrProfit && order.Price < minPrice)
-                    {
-                        realPrice = minPrice;
+                        realPrice = buyBestPrice;
                     }
 
                     int slippage = 0;

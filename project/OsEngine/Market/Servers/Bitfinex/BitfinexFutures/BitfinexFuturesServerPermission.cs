@@ -185,13 +185,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
         public string[] ManuallyClosePositionOnBoard_ExceptionPositionNames
         {
-            get
-            {
-            return new string[]
-                
-            {"USTF0" };
-            
-            }
+            get { return null; }
         }
 
         public bool CanQueryOrdersAfterReconnect
@@ -209,6 +203,34 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         #region Other Permissions
 
         public bool IsNewsServer
+        {
+            get { return false; }
+        }
+
+        public bool IsSupports_CheckDataFeedLogic
+        {
+            get { return false; }
+        }
+
+        public string[] CheckDataFeedLogic_ExceptionSecuritiesClass
+        {
+            get { return null; }
+        }
+
+        public int CheckDataFeedLogic_NoDataMinutesToDisconnect
+        {
+            get
+            {
+                return 10;
+            }
+        }
+
+        public bool IsSupports_MultipleInstances
+        {
+            get{ return true; }
+        }
+
+        public bool IsSupports_ProxyFor_MultipleInstances
         {
             get { return false; }
         }

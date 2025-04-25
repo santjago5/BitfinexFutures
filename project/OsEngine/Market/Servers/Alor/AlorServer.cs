@@ -21,8 +21,9 @@ namespace OsEngine.Market.Servers.Alor
 {
     public class AlorServer : AServer
     {
-        public AlorServer()
+        public AlorServer(int uniqueNumber)
         {
+            ServerNum = uniqueNumber;
             AlorServerRealization realization = new AlorServerRealization();
             ServerRealization = realization;
 
@@ -37,6 +38,7 @@ namespace OsEngine.Market.Servers.Alor
             CreateParameterBoolean(OsLocalization.Market.UseOptions, false);
             CreateParameterBoolean(OsLocalization.Market.UseOther, false);
             CreateParameterEnum(OsLocalization.Market.ServerParam13, "10", new List<string> { "1", "10", "20"});
+            CreateParameterBoolean(OsLocalization.Market.IgnoreMorningAuctionTrades, false);
         }
     }
 
@@ -79,6 +81,7 @@ namespace OsEngine.Market.Servers.Alor
                 _portfolioFutId = ((ServerParameterString)ServerParameters[2]).Value;
                 _portfolioCurrencyId = ((ServerParameterString)ServerParameters[3]).Value;
                 _portfolioSpareId = ((ServerParameterString)ServerParameters[4]).Value;
+                _ignoreMorningAuctionTrades = ((ServerParameterBool)ServerParameters[11]).Value;
 
                 if (string.IsNullOrEmpty(_apiTokenRefresh))
                 {
@@ -212,6 +215,7 @@ namespace OsEngine.Market.Servers.Alor
         private bool _useOptions = false;
         private bool _useCurrency = false;
         private bool _useOther = false;
+        private bool _ignoreMorningAuctionTrades = true; // ignore trades before 7:00 MSK for stocks and before 9:00 for futures
 
         private string _portfolioSpotId;
         private string _portfolioFutId;
@@ -337,6 +341,7 @@ namespace OsEngine.Market.Servers.Alor
                     newSecurity.Exchange = item.exchange;
                     newSecurity.DecimalsVolume = 0;
                     newSecurity.Lot = item.lotsize.ToDecimal();
+                    newSecurity.VolumeStep = 1;
                     newSecurity.Name = item.symbol;
                     newSecurity.NameFull = item.symbol + "_" + item.board;
 
@@ -1684,6 +1689,35 @@ namespace OsEngine.Market.Servers.Alor
 
             }
 
+            if (_ignoreMorningAuctionTrades && trade.Time.Hour < 9) // process only mornings
+            {
+                Security security = _subscribedSecurities[0];
+                for (int i = 0; i < _subscribedSecurities.Count; i++)
+                {
+                    if (_subscribedSecurities[i].Name == trade.SecurityNameCode)
+                    {
+                        security = _subscribedSecurities[i];
+                        break;
+                    }
+                }
+
+                if (security.SecurityType == SecurityType.Futures)
+                {
+                    if (trade.Time < trade.Time.Date.AddHours(9))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    if (trade.Time < trade.Time.Date.AddHours(7))
+                    {
+                        return;
+                    }
+                }
+            }
+
+
             if (NewTradesEvent != null)
             {
                 NewTradesEvent(trade);
@@ -2406,7 +2440,7 @@ namespace OsEngine.Market.Servers.Alor
                 if(qty <= 0 ||
                     order.State != OrderStateType.Active)
                 {
-                    SendLogMessage("Can`t change price to order. It's not in Activ state", LogMessageType.Error);
+                    SendLogMessage("Can`t change price to order. It's not in Active state", LogMessageType.Error);
                     return;
                 }
 
@@ -2803,7 +2837,13 @@ namespace OsEngine.Market.Servers.Alor
             {
                 // /md/v2/Clients/MOEX/D39004/LKOH/trades?format=Simple
 
-                string endPoint = "/md/v2/clients/MOEX/" + portfolio + "/" + security + "/trades?format=Simple";
+                string exchange = "MOEX";
+                if (portfolio.StartsWith("E"))
+                {
+                    exchange = "UNITED";
+                }
+
+                string endPoint = $"/md/v2/clients/{exchange}/{portfolio}/{security}/trades?format=Simple";
 
                 RestRequest requestRest = new RestRequest(endPoint, Method.GET);
                 requestRest.AddHeader("Authorization", "Bearer " + _apiTokenReal);
@@ -2812,7 +2852,6 @@ namespace OsEngine.Market.Servers.Alor
                 RestClient client = new RestClient(_restApiHost);
 
                 IRestResponse response = client.Execute(requestRest);
-
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {

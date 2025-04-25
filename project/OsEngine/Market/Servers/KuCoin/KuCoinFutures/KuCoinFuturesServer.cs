@@ -18,8 +18,9 @@ namespace OsEngine.Market.Servers.KuCoin.KuCoinFutures
 {
     public class KuCoinFuturesServer : AServer
     {
-        public KuCoinFuturesServer()
+        public KuCoinFuturesServer(int uniqueNumber)
         {
+            ServerNum = uniqueNumber;
             KuCoinFuturesServerRealization realization = new KuCoinFuturesServerRealization();
             ServerRealization = realization;
 
@@ -240,7 +241,16 @@ namespace OsEngine.Market.Servers.KuCoin.KuCoinFutures
                     newSecurity.State = SecurityStateType.Activ;
                     newSecurity.Name = item.symbol;
                     newSecurity.NameFull = item.symbol;
-                    newSecurity.NameClass = item.rootSymbol;  // item.quoteCurrency
+
+                    if (item.isInverse == "true")
+                    {
+                        newSecurity.NameClass = "Inverse_" + item.quoteCurrency;
+                    }
+                    else
+                    {
+                        newSecurity.NameClass = item.quoteCurrency;
+                    }
+
                     newSecurity.NameId = item.symbol;
                     newSecurity.SecurityType = SecurityType.Futures;
 
@@ -249,7 +259,10 @@ namespace OsEngine.Market.Servers.KuCoin.KuCoinFutures
                     newSecurity.Lot = item.lotSize.ToDecimal();
 
                     newSecurity.Decimals = item.tickSize.DecimalsCount();
-                    newSecurity.DecimalsVolume = item.lotSize.DecimalsCount();
+                    newSecurity.DecimalsVolume = item.multiplier.DecimalsCount();
+                    newSecurity.MinTradeAmountType = MinTradeAmountType.Contract;
+                    newSecurity.MinTradeAmount = Math.Abs(item.multiplier.ToDecimal());
+                    newSecurity.VolumeStep = Math.Abs(item.multiplier.ToDecimal());
 
                     securities.Add(newSecurity);
                 }
@@ -1270,14 +1283,14 @@ namespace OsEngine.Market.Servers.KuCoin.KuCoinFutures
                 }
                 else
                 {
-                    CreateOrderFail(order);
+                    GetOrderStatus(order);
                     SendLogMessage($"Code: {stateResponse.code}\n"
                         + $"Message: {stateResponse.msg}", LogMessageType.Error);
                 }
             }
             else
             {
-                CreateOrderFail(order);
+                GetOrderStatus(order);
                 SendLogMessage($"CancelOrder> Http State Code: {responseMessage.StatusCode}", LogMessageType.Error);
 
                 if (stateResponse != null && stateResponse.code != null)

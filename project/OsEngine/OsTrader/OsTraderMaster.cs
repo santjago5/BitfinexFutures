@@ -15,7 +15,6 @@ using OsEngine.Market.Servers.Tester;
 using OsEngine.OsTrader.Panels;
 using OsEngine.OsTrader.Panels.Tab;
 using OsEngine.OsTrader.RiskManager;
-using OsEngine.PrimeSettings;
 using OsEngine.Robots;
 using System;
 using System.Collections.Generic;
@@ -915,9 +914,7 @@ namespace OsEngine.OsTrader
             return sec;
         }
 
-
         #endregion
-
 
         #region Journal
 
@@ -1109,7 +1106,7 @@ namespace OsEngine.OsTrader
 
         #endregion
 
-        #region control and drawing of BuyAtStop / SellAtStop positions
+        #region Control and drawing of BuyAtStop / SellAtStop positions
 
         private BuyAtStopPositionsViewer _buyAtStopPosViewer;
 
@@ -1187,7 +1184,7 @@ namespace OsEngine.OsTrader
 
         #endregion
 
-        #region log
+        #region Log
 
         /// <summary>
         /// Log
@@ -1216,7 +1213,7 @@ namespace OsEngine.OsTrader
 
         #endregion
 
-        // events from the test server
+        #region Events from the test server
 
         /// <summary>
         /// Is rewind enabled in the tester
@@ -1286,7 +1283,9 @@ namespace OsEngine.OsTrader
             StartPaint();
         }
 
-        // Disable/Enable Interface
+        #endregion
+
+        #region Disable/Enable Interface
 
         /// <summary>
         /// Stop drawing the interface
@@ -1395,7 +1394,9 @@ namespace OsEngine.OsTrader
             return true;
         }
 
-        // Storage Management
+        #endregion
+
+        #region Storage Management
 
         /// <summary>
         /// Remove active bot
@@ -1490,7 +1491,7 @@ namespace OsEngine.OsTrader
             try
             {
                 BotCreateUi2 ui = new BotCreateUi2(BotFactory.GetIncludeNamesStrategy(),
-                    BotFactory.GetScriptsNamesStrategy(), _startProgram);
+                    BotFactory.GetScriptsNamesStrategy(), _startProgram, BotNames);
 
                 ui.ShowDialog();
 
@@ -1504,42 +1505,6 @@ namespace OsEngine.OsTrader
                     CustomMessageBoxUi box = new CustomMessageBoxUi(OsLocalization.Trader.Label304);
                     box.ShowDialog();
                     return;
-                }
-
-                if (File.Exists(@"Engine\" + @"SettingsRealKeeper.txt"))
-                {
-                    using (StreamReader reader = new StreamReader(@"Engine\" + @"SettingsRealKeeper.txt"))
-                    {
-                        while (!reader.EndOfStream)
-                        {
-                            string[] str = reader.ReadLine().Split('@');
-
-                            if (str[0] == ui.NameBot)
-                            {
-                                CustomMessageBoxUi box = new CustomMessageBoxUi(OsLocalization.Trader.Label8);
-                                box.ShowDialog();
-                                return;
-                            }
-                        }
-                    }
-                }
-
-                if (File.Exists(@"Engine\" + @"SettingsTesterKeeper.txt"))
-                {
-                    using (StreamReader reader = new StreamReader(@"Engine\" + @"SettingsTesterKeeper.txt"))
-                    {
-                        while (!reader.EndOfStream)
-                        {
-                            string[] str = reader.ReadLine().Split('@');
-
-                            if (str[0] == ui.NameBot)
-                            {
-                                CustomMessageBoxUi box = new CustomMessageBoxUi(OsLocalization.Trader.Label8);
-                                box.ShowDialog();
-                                return;
-                            }
-                        }
-                    }
                 }
 
                 BotPanel newRobot = BotFactory.GetStrategyForName(ui.NameStrategy, ui.NameBot, _startProgram, ui.IsScript);
@@ -1573,6 +1538,45 @@ namespace OsEngine.OsTrader
             }
         }
 
+        private List<string> BotNames
+        {
+            get
+            {
+                List<string> result = new List<string>();
+
+                if (File.Exists(@"Engine\" + @"SettingsRealKeeper.txt"))
+                {
+                    using (StreamReader reader = new StreamReader(@"Engine\" + @"SettingsRealKeeper.txt"))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            string[] str = reader.ReadLine().Split('@');
+
+                            string name = str[0];
+
+                            result.Add(name);
+                        }
+                    }
+                }
+
+                if (File.Exists(@"Engine\" + @"SettingsTesterKeeper.txt"))
+                {
+                    using (StreamReader reader = new StreamReader(@"Engine\" + @"SettingsTesterKeeper.txt"))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            string[] str = reader.ReadLine().Split('@');
+
+                            string name = str[0];
+
+                            result.Add(name);
+                        }
+                    }
+                }
+                return result;
+            }
+        }
+
         /// <summary>
         /// Reload active robot
         /// </summary>
@@ -1594,7 +1598,9 @@ namespace OsEngine.OsTrader
             }
         }
 
-        // Robot control
+        #endregion
+
+        #region Robot control
 
         /// <summary>
         /// Show the position tracking settings for the robot
@@ -1891,7 +1897,9 @@ namespace OsEngine.OsTrader
             return null;
         }
 
-        // lightweight interface
+        #endregion
+
+        #region Lightweight interface
 
         /// <summary>
         /// Event: Bot created
@@ -1902,5 +1910,7 @@ namespace OsEngine.OsTrader
         /// Event: Bot removed
         /// </summary>
         public event Action<BotPanel> BotDeleteEvent;
+
+        #endregion
     }
 }

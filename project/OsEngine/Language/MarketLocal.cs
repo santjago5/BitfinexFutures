@@ -67,7 +67,7 @@ namespace OsEngine.Language
 
         public string Label7 => OsLocalization.ConvertToLocString(
             "Eng:Security_" +
-            "Ru:Инструмент_"); 
+            "Ru:Инструмент_");
 
         public string Label8 => OsLocalization.ConvertToLocString(
             "Eng:From what we collect candles_" +
@@ -689,6 +689,34 @@ namespace OsEngine.Language
           "Eng:If the broker uses several client codes, the value is false (for example, Finam , BCS), if there is only one client code, the value is true (for example, VTB). By default, false_" +
           "Ru:Если брокер использует несколько клиентских кодов, то значение false (например, Финам, БКС), если клиент код всего один, то значение true (например, ВТБ). По умолчанию false_");
 
+        public string Label164 => OsLocalization.ConvertToLocString(
+          "Eng:Name _" +
+          "Ru:Имя _");
+
+        public string Label165 => OsLocalization.ConvertToLocString(
+          "Eng:Do you want to remove the connector? Settings will be lost!_" +
+          "Ru:Хотите удалить коннектор? Настройки будут утеряны!_");
+
+        public string Label166 => OsLocalization.ConvertToLocString(
+          "Eng:Pre-configured connections_" +
+          "Ru:Преднастроенные соединения_");
+
+        public string Label167 => OsLocalization.ConvertToLocString(
+          "Eng:Number_" +
+          "Ru:Номер_");
+
+        public string Label168 => OsLocalization.ConvertToLocString(
+          "Eng:Prefix_" +
+          "Ru:Приставка_");
+
+        public string Label169 => OsLocalization.ConvertToLocString(
+          "Eng:State_" +
+          "Ru:Статус_");
+
+        public string Label170 => OsLocalization.ConvertToLocString(
+          "Eng:Add new_" +
+          "Ru:Добавить_");
+
         public string LabelCommissionType => OsLocalization.ConvertToLocString(
             "Eng:Commission type_" +
             "Ru:Тип комиссии_");
@@ -1260,12 +1288,17 @@ namespace OsEngine.Language
         public string ButtonNameChangePassword => OsLocalization.ConvertToLocString(
             "Eng:Change password_" +
             "Ru:Изменить пароль_");
-      
+
         public string Exchange => OsLocalization.ConvertToLocString(
             "Eng:Exchange_" +
             "Ru:Биржа_"
 
 
         );
+        public string IgnoreMorningAuctionTrades => OsLocalization.ConvertToLocString(
+            "Eng:Ignore morning auction trades_" +
+            "Ru:Игнорировать сделки утреннего аукциона_");
+
+
     }
 }

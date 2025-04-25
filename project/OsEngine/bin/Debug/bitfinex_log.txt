@@ -3735,3 +3735,119 @@
 2025-04-24 14:43:17 [System] WebSocket authentication successful
 2025-04-24 14:43:20 [System] Securities loaded. Count: 85
 2025-04-24 14:43:30 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-24 15:27:04 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-24 15:27:04 [System] WebSocket public Trades Bitfinex open.
+2025-04-24 15:27:05 [System] All sockets activated.
+2025-04-24 15:27:05 [System] Connection to private data is Open
+2025-04-24 15:27:05 [System] All sockets activated.
+2025-04-24 15:27:05 [System] Start Bitfinex Connection
+2025-04-24 15:27:06 [System] WebSocket private opened
+2025-04-24 15:27:06 [System] WebSocket authentication successful
+2025-04-24 15:27:09 [System] Securities loaded. Count: 85
+2025-04-24 15:27:19 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-24 15:27:40 [Trade] OsEngine.Entity.MyTrade
+2025-04-24 15:27:40 [Trade] OsEngine.Entity.MyTrade
+2025-04-24 15:27:41 [Trade] OsEngine.Entity.MyTrade
+2025-04-24 15:27:41 [Trade] OsEngine.Entity.MyTrade
+2025-04-24 20:47:31 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-24 20:47:31 [System] WebSocket public Trades Bitfinex open.
+2025-04-24 20:47:32 [System] All sockets activated.
+2025-04-24 20:47:32 [System] Connection to private data is Open
+2025-04-24 20:47:32 [System] All sockets activated.
+2025-04-24 20:47:32 [System] Start Bitfinex Connection
+2025-04-24 20:47:32 [System] WebSocket private opened
+2025-04-24 20:47:32 [System] WebSocket authentication successful
+2025-04-24 20:47:36 [System] Securities loaded. Count: 85
+2025-04-24 20:47:47 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-24 20:52:14 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-24 20:52:14 [System] WebSocket public Trades Bitfinex open.
+2025-04-24 20:52:14 [System] All sockets activated.
+2025-04-24 20:52:14 [System] Connection to private data is Open
+2025-04-24 20:52:14 [System] All sockets activated.
+2025-04-24 20:52:14 [System] Start Bitfinex Connection
+2025-04-24 20:52:15 [System] WebSocket private opened
+2025-04-24 20:52:15 [System] WebSocket authentication successful
+2025-04-24 20:52:18 [System] Securities loaded. Count: 85
+2025-04-24 20:58:48 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-24 20:58:49 [System] WebSocket public Trades Bitfinex open.
+2025-04-24 20:58:49 [System] All sockets activated.
+2025-04-24 20:58:49 [System] Connection to private data is Open
+2025-04-24 20:58:49 [System] All sockets activated.
+2025-04-24 20:58:49 [System] Start Bitfinex Connection
+2025-04-24 20:58:50 [System] WebSocket private opened
+2025-04-24 20:58:50 [System] WebSocket authentication successful
+2025-04-24 20:58:53 [System] Securities loaded. Count: 85
+2025-04-24 21:05:35 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-24 21:05:36 [System] WebSocket public Trades Bitfinex open.
+2025-04-24 21:05:36 [System] All sockets activated.
+2025-04-24 21:05:36 [System] Connection to private data is Open
+2025-04-24 21:05:36 [System] All sockets activated.
+2025-04-24 21:05:36 [System] Start Bitfinex Connection
+2025-04-24 21:05:37 [System] WebSocket private opened
+2025-04-24 21:05:37 [System] WebSocket authentication successful
+2025-04-24 21:05:40 [System] Securities loaded. Count: 85
+2025-04-25 05:05:02 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-25 05:05:02 [System] WebSocket public Trades Bitfinex open.
+2025-04-25 05:05:03 [System] All sockets activated.
+2025-04-25 05:05:03 [System] Connection to private data is Open
+2025-04-25 05:05:03 [System] All sockets activated.
+2025-04-25 05:05:03 [System] Start Bitfinex Connection
+2025-04-25 05:05:04 [System] WebSocket private opened
+2025-04-25 05:05:04 [System] WebSocket authentication successful
+2025-04-25 05:05:07 [System] Securities loaded. Count: 85
+2025-04-25 05:09:07 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-25 05:09:07 [System] WebSocket public Trades Bitfinex open.
+2025-04-25 05:09:08 [System] All sockets activated.
+2025-04-25 05:09:08 [System] Connection to private data is Open
+2025-04-25 05:09:08 [System] All sockets activated.
+2025-04-25 05:09:08 [System] Start Bitfinex Connection
+2025-04-25 05:09:09 [System] WebSocket private opened
+2025-04-25 05:09:09 [System] WebSocket authentication successful
+2025-04-25 05:09:12 [System] Securities loaded. Count: 85
+2025-04-25 05:10:14 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-25 05:10:14 [System] WebSocket public Trades Bitfinex open.
+2025-04-25 05:10:15 [System] All sockets activated.
+2025-04-25 05:10:15 [System] Connection to private data is Open
+2025-04-25 05:10:15 [System] All sockets activated.
+2025-04-25 05:10:15 [System] Start Bitfinex Connection
+2025-04-25 05:10:15 [System] WebSocket private opened
+2025-04-25 05:10:15 [System] WebSocket authentication successful
+2025-04-25 05:10:19 [System] Securities loaded. Count: 85
+2025-04-25 10:59:21 [System] WebSocket public MarketDepths Bitfinex open.
+2025-04-25 10:59:21 [System] WebSocket public Trades Bitfinex open.
+2025-04-25 10:59:21 [System] All sockets activated.
+2025-04-25 10:59:21 [System] Connection to private data is Open
+2025-04-25 10:59:21 [System] All sockets activated.
+2025-04-25 10:59:21 [System] Start Bitfinex Connection
+2025-04-25 10:59:22 [System] WebSocket private opened
+2025-04-25 10:59:22 [System] WebSocket authentication successful
+2025-04-25 10:59:22 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:23 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:24 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:26 [System] Securities loaded. Count: 85
+2025-04-25 10:59:33 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:37 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:38 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:44 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:49 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 10:59:55 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:00 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:06 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:11 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:16 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:22 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:27 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:32 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:38 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:43 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:48 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:54 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:00:59 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:04 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:10 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:15 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:20 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:26 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:31 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:36 [Trade] GetAllOpenOrders> No active orders found.
+2025-04-25 11:01:47 [Trade] Order canceled Successfully. Order ID:203498232525

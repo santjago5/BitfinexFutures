@@ -185,7 +185,13 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
         public string[] ManuallyClosePositionOnBoard_ExceptionPositionNames
         {
-            get { return null; }
+            get
+            {
+            return new string[]
+                
+            {"USTF0" };
+            
+            }
         }
 
         public bool CanQueryOrdersAfterReconnect

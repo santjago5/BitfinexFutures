@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using System.Globalization;
 using System.IO;
 using ErrorEventArgs = WebSocketSharp.ErrorEventArgs;
+using System.Linq;
 
 
 
@@ -399,6 +400,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                     CreateQueryPortfolio(false);
                     CreateQueryPositions(false);
+                    GetAllOpenOrders();
+
+
                 }
                 catch (Exception ex)
                 {
@@ -427,6 +431,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
             CreateQueryPortfolio(true);
             CreateQueryPositions(true);
+            GetAllOpenOrders();
 
             PortfolioEvent?.Invoke(Portfolios);
         }
@@ -483,7 +488,7 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             }
         }
 
-        private RateGate _rateGatePositions = new RateGate(90, TimeSpan.FromMilliseconds(60000));
+        private RateGate _rateGatePositions = new RateGate(1, TimeSpan.FromMilliseconds(706));
 
         public void CreateQueryPositions(bool updateValueBegin)
         {
@@ -522,9 +527,9 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                         position.UnrealizedPnl = Math.Round(pos[6].ToString().ToDecimal(), 4);
 
                         portfolio.SetNewPosition(position);
-                        SendLogMessage($"{position.SecurityNameCode},{position.ValueCurrent} ,{position.UnrealizedPnl} ", LogMessageType.Error);
-
+     
                     }
+
                     PortfolioEvent.Invoke(_portfolios);
                 }
 
@@ -538,8 +543,6 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 SendLogMessage("CreateQueryPositions error: " + ex.Message, LogMessageType.Error);
             }
         }
-
-
 
         #endregion
 
@@ -1998,9 +2001,6 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
         {
             try
             {
-                SendLogMessage("UpdatePosition RAW: " + message, LogMessageType.Error);
-
-
                 object[] data = JsonConvert.DeserializeObject<object[]>(message);
 
                 if (data.Length >= 3)
@@ -2017,10 +2017,6 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                         return;
                     }
 
-                    for (int i = 0; i < positionArray.Count; i++)
-                    {
-                        SendLogMessage($"positionArray[{i}] = {positionArray[i]}", LogMessageType.Error);
-                    }
                     PositionOnBoard boardPosition = new PositionOnBoard();
 
                     boardPosition.PortfolioName = "BitfinexFuturesPortfolio";
@@ -2397,22 +2393,18 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                     volume = Math.Abs(volume);
 
                 }
-
-
                 if (message.Contains("tu"))
                 {
                     string comissionSecName = tradeData[10].ToString();
-                    myTrade.Volume = volume + tradeData[9].ToString().ToDecimal();
+                    myTrade.Volume = volume - tradeData[9].ToString().ToDecimal();
                 }
                 else
                 {
                     myTrade.Volume = volume;
                 }
 
-
-
-                // SendLogMessage(myTrade.ToString(), LogMessageType.Trade);
-                SendLogMessage($"MY TRADE: {myTrade.Side} {myTrade.Price} {myTrade.Volume}, Order: {myTrade.NumberOrderParent}", LogMessageType.Trade);
+                 SendLogMessage(myTrade.ToString(), LogMessageType.Trade);
+              
                 MyTradeEvent?.Invoke(myTrade);
 
             }
@@ -2486,10 +2478,6 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
                 updateOrder.Volume = volume;
                 updateOrder.PortfolioNumber = "BitfinexFuturesPortfolio";
 
-
-                SendLogMessage($"ORDER STATE: {updateOrder.Side}, {updateOrder.State}, {updateOrder.Price}, {updateOrder.Volume}", LogMessageType.Error);
-
-
                 MyOrderEvent?.Invoke(updateOrder);
 
             }
@@ -2548,6 +2536,22 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
 
                 _portfolios.Add(portfolio);
 
+
+                List<Order> openOrders = GetAllOpenOrders();
+
+                if (openOrders != null)
+                {
+                    PositionOnBoard order = new PositionOnBoard();
+                    order.PortfolioName = "BitfinexFuturesPortfolio";
+                    order.SecurityNameCode = wallet[1].ToString();
+                    order.ValueBegin = Math.Round(wallet[2].ToString().ToDecimal(), 4);
+                    order.ValueCurrent = Math.Round(wallet[4] != null ? wallet[4].ToString().ToDecimal() : 1, 4);
+                    foreach (var orders in openOrders)
+                    {
+                        portfolio.SetNewPosition(order);
+                    }
+                }
+
                 if (_portfolios.Count > 0)
                 {
                     PortfolioEvent?.Invoke(_portfolios);
@@ -2559,11 +2563,72 @@ namespace OsEngine.Market.Servers.Bitfinex.BitfinexFutures
             }
         }
 
+        //private void UpdateFuturesPortfolio(List<List<object>> positionsRaw)
+        //{
+        //    try
+        //    {
+        //        if (_portfolios == null)
+        //            _portfolios = new List<Portfolio>();
+
+        //        // Создаём или очищаем портфель
+        //        Portfolio portfolio = _portfolios.FirstOrDefault(p => p.Number == "BitfinexFuturesPortfolio");
+
+        //        if (portfolio == null)
+        //        {
+        //            portfolio = new Portfolio
+        //            {
+        //                Number = "BitfinexFuturesPortfolio",
+        //                ValueBegin = 1,
+        //                ValueCurrent = 1,
+        //                ServerType = ServerType.BitfinexFutures
+        //            };
+        //            _portfolios.Add(portfolio);
+        //        }
+        //        else
+        //        {
+        //            portfolio.Clear(); // очистка старых позиций и ордеров
+        //        }
+
+        //        // ✅ Добавляем открытые позиции
+        //        foreach (var pos in positionsRaw)
+        //        {
+        //            PositionOnBoard position = new PositionOnBoard
+        //            {
+        //                PortfolioName = "BitfinexFuturesPortfolio",
+        //                SecurityNameCode = pos[0].ToString(),
+        //                ValueCurrent = Math.Round(pos[2].ToString().ToDecimal(), 4),
+        //                UnrealizedPnl = Math.Round(pos[6].ToString().ToDecimal(), 4)
+        //            };
+
+        //            portfolio.SetNewPosition(position);
+        //        }
+
+        //        // ✅ Добавляем открытые ордера
+        //        List<Order> openOrders = GetAllOpenOrders();
+
+        //        if (openOrders != null)
+        //        {
+        //            foreach (var order in openOrders)
+        //            {
+        //                portfolio.SetNewOrder(order);
+        //            }
+        //        }
+
+        //        // ✅ Обновление UI/системы
+        //        PortfolioEvent?.Invoke(_portfolios);
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        SendLogMessage("UpdateFuturesPortfolio > " + exception.ToString(), LogMessageType.Error);
+        //    }
+        //}
+
+
         #endregion
 
         #region  11 Trade
 
-        private RateGate _rateGateOrder = new RateGate(90, TimeSpan.FromMilliseconds(60000));
+        private RateGate _rateGateOrder = new  RateGate(1, TimeSpan.FromMilliseconds(706));
 
         public void SendOrder(Order order)
         {

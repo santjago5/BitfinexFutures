@@ -94,7 +94,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
                 for (int j = 0; j < secInArray.Length; j++)
                 {
                     if (curSec == secInArray[j] &&
-                        curClass == classCode)
+                        curClass == classCode)//Futures
                     {
                         securitiesActivated.Add(securitiesFromServer[i]);
                         break;

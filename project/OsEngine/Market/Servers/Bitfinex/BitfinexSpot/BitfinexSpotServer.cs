@@ -20,7 +20,7 @@ using System.Threading;
 using Newtonsoft.Json;
 
 
-namespace OsEngine.Market.Servers.Bitfinex
+namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 {
     public class BitfinexSpotServer : AServer
     {

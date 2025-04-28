@@ -1,4 +1,5 @@
 ﻿using OsEngine.Entity;
+using OsEngine.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
         public string SecurityClassToTrade = "Futures";
 
         public string AssetInPortfolio = "ETH";
-
+        
         public decimal VolumeToTrade;
 
         public string PortfolioName;
@@ -87,7 +88,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
 
             Server.ServerRealization.Subscrible(mySecurity);
 
-            DateTime timeStartWait = DateTime.Now.AddMinutes(2);
+            DateTime timeStartWait = DateTime.Now.AddMinutes(5);
 
             while (_md == null)
             {
@@ -230,6 +231,7 @@ namespace OsEngine.Robots.AutoTestBots.ServerTests
             // 2 ордер на покупку
 
             SendSellOrder(mySecurity, md.Bids[0].Price);
+
             
             if (this._errors != null &&
                 this._errors.Count > 0)

@@ -3,7 +3,7 @@
  *Ваши права на использование кода регулируются данной лицензией http://o-s-a.net/doc/license_simple_engine.pdf
 */
 
-namespace OsEngine.Market.Servers.Bitfinex
+namespace OsEngine.Market.Servers.Bitfinex.BitfinexSpot
 {
     public class BitfinexSpotServerPermission : IServerPermission
     {

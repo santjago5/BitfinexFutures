@@ -15,7 +15,6 @@ using OsEngine.Market.Servers;
 using OsEngine.Market.Servers.AstsBridge;
 using OsEngine.Market.Servers.Binance.Futures;
 using OsEngine.Market.Servers.Binance.Spot;
-using OsEngine.Market.Servers.Bitfinex;
 using OsEngine.Market.Servers.BitMax;
 using OsEngine.Market.Servers.BitMex;
 using OsEngine.Market.Servers.BitStamp;
@@ -73,6 +72,8 @@ using OsEngine.Market.Servers.CoinEx.Spot;
 using OsEngine.Market.Servers.CoinEx.Futures;
 using OsEngine.Market.Servers.RSSNews;
 using OsEngine.Market.Servers.SmartLabNews;
+using OsEngine.Market.Servers.Bitfinex.BitfinexSpot;
+using OsEngine.Market.Servers.Bitfinex.BitfinexFutures;
 using OsEngine.Market.Servers.AE;
 using OsEngine.Market.Proxy;
 using System.Net;
@@ -288,6 +289,7 @@ namespace OsEngine.Market
                 serverTypes.Add(ServerType.BitMex);
                 serverTypes.Add(ServerType.BitStamp);
                 serverTypes.Add(ServerType.BitfinexSpot);
+                serverTypes.Add(ServerType.BitfinexFutures);
                 serverTypes.Add(ServerType.Kraken);
                 serverTypes.Add(ServerType.KuCoinSpot);
                 serverTypes.Add(ServerType.KuCoinFutures);
@@ -408,6 +410,7 @@ namespace OsEngine.Market
                 serverTypes.Add(ServerType.BitMex);
                 serverTypes.Add(ServerType.BitStamp);
                 serverTypes.Add(ServerType.BitfinexSpot);
+                serverTypes.Add(ServerType.BitfinexFutures);
                 serverTypes.Add(ServerType.Kraken);
                 serverTypes.Add(ServerType.Exmo);
                 serverTypes.Add(ServerType.HTXFutures);
@@ -640,6 +643,10 @@ namespace OsEngine.Market
                 if (type == ServerType.BitfinexSpot)
                 {
                     newServer = new BitfinexSpotServer(uniqueNum);
+                }
+                if (type == ServerType.BitfinexFutures)
+                {
+                    newServer = new BitfinexFuturesServer();
                 }
                 if (type == ServerType.Binance)
                 {
@@ -1362,6 +1369,10 @@ namespace OsEngine.Market
                 {
                     serverPermission = new BitfinexSpotServerPermission();
                 }
+                else if (type == ServerType.BitfinexFutures)
+                {
+                    serverPermission = new BitfinexFuturesServerPermission();
+                }
                 else if (type == ServerType.Kraken)
                 {
                     serverPermission = new KrakenServerPermission();
@@ -1740,6 +1751,13 @@ namespace OsEngine.Market
         /// биржа криптовалют BitfinexSpot
         /// </summary>
         BitfinexSpot,
+
+        /// <summary>
+        /// cryptocurrency exchange BitfinexFutures
+        /// биржа криптовалют BitfinexFutures
+
+        /// </summary>
+        BitfinexFutures,
 
         /// <summary>
         /// cryptocurrency exchange Binance

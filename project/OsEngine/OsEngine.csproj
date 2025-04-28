@@ -512,6 +512,11 @@
     <Compile Include="Market\Servers\Atp\SecuritiesAtpUi.xaml.cs">
       <DependentUpon>SecuritiesAtpUi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\BitfinexFuturesServerPermission.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\BitfinexFuturesServer.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesCandle.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesOrder.cs" />
+    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesWebsocketTrades.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\BitfinexSpotServer.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\BitfinexSpotServerPermission.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\Json\BitfinexCandle.cs" />
@@ -1255,8 +1260,8 @@
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_6_ChangePriceError.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_8_RequestOnReconnect.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_9_RequestLostActivOrder.cs" />
-    <Compile Include="Robots\AutoTestBots\ServerTests\Portfolio_1_Validation.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Orders_7_Add_Move_Cancel_Spam.cs" />
+    <Compile Include="Robots\AutoTestBots\ServerTests\Portfolio_1_Validation.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Var_2_MarketDepth.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Var_1_Securities.cs" />
     <Compile Include="Robots\AutoTestBots\ServerTests\Var_3_Trades.cs" />

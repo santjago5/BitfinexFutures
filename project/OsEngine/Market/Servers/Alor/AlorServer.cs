@@ -65,7 +65,7 @@ namespace OsEngine.Market.Servers.Alor
             worker4.Start();
         }
 
-        public void Connect()
+        public void Connect(WebProxy proxy = null)
         {
             try
             {
@@ -1540,7 +1540,7 @@ namespace OsEngine.Market.Servers.Alor
                 subObjMarketDepth.guid = GetGuid();
                 subObjMarketDepth.token = _apiTokenReal;
 
-                if (((ServerParameterBool)ServerParameters[18]).Value == false)
+                if (((ServerParameterBool)ServerParameters[19]).Value == false)
                 {
                     subObjMarketDepth.depth = "1";
                 }

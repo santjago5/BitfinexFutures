@@ -516,7 +516,6 @@
     <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\BitfinexFuturesServer.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesCandle.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesOrder.cs" />
-    <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesPosition.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexFutures\Json\BitfinexFuturesWebsocketTrades.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\BitfinexSpotServer.cs" />
     <Compile Include="Market\Servers\Bitfinex\BitfinexSpot\BitfinexSpotServerPermission.cs" />
